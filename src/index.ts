@@ -30,15 +30,6 @@ export class SimplDB {
     }
   }
 
-  private validateJSON(json: JSON): boolean {
-    try {
-      JSON.parse(JSON.stringify(json));
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
-
   private fetchData(): Data | never {
     try {
       return JSON.parse(FS.readFileSync(this.config.filePath, 'utf8'));
@@ -84,7 +75,7 @@ export class SimplDB {
     let oldArray = get(this.data, key);
 
     if (!oldArray) oldArray = [];
-    else if (!(oldArray instanceof Array)) throw new TypeError('Provided key is not an array.');
+    else if (!(oldArray instanceof Array)) throw new TypeError('Provided key value is not an array.');
 
     oldArray.push(value);
 
@@ -98,7 +89,7 @@ export class SimplDB {
   public pull(key: string, value: any): void {
     let oldArray = get(this.data, key);
 
-    if (!(oldArray instanceof Array)) throw new TypeError('Provided key is not an array.');
+    if (!(oldArray instanceof Array)) throw new TypeError('Provided key value is not an array.');
 
     oldArray = oldArray.filter((v: any) => v !== value);
 
@@ -132,13 +123,7 @@ export class SimplDB {
   public clear(): boolean {
     this.data = {};
     if (this.config.saveOnUpdate) this.save();
-    return !this.data;
-  }
-
-  public replaceWith(json: JSON): void | false {
-    this.data = json;
-    if (!this.validateJSON(json)) return false;
-    if (this.config.saveOnUpdate) this.save();
+    return this.data === {};
   }
 
   public toJSON(): JSON | never {
