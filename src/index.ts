@@ -21,7 +21,7 @@ export class SimplDB {
     try {
       FS.lstatSync(filePath);
     } catch (e) {
-      if (e.code === 'ENOENT') throw new Error('Provided file does not exist.');
+      if (e.code === 'ENOENT') throw new ReferenceError('Provided file does not exist.');
       else if (e.code === 'EACCES') throw new Error('Provided file cannot be accessed.');
     }
   }
@@ -44,6 +44,14 @@ export class SimplDB {
   }
 
   public addOrSubtract(operation: string, key: string, value: number): number | never {
+    if (key.includes('.'))
+      key = Object.keys(
+        key
+          .split('.')
+          .slice(0, -1)
+          .reduce((acc, curr) => acc[curr], this.data),
+      )[0];
+
     if (!!this.data[key] && isNaN(this.data[key])) throw new Error('The value from the provided key is not a number.');
     else if (!this.data[key]) this.data[key] = value;
     else operation === 'add' ? (this.data[key] += value) : (this.data[key] -= value);
@@ -71,7 +79,7 @@ export class SimplDB {
   public push(key: string, value: any): any[] {
     if (this.data[key] instanceof Array) this.data[key].push(value);
     else if (!(this.data[key] instanceof Array) && !this.data[key]) this.data[key] = [value];
-    else throw new Error('Provided key is not an array.');
+    else throw new TypeError('Provided key is not an array.');
 
     if (this.config.saveOnUpdate) this.save();
 
@@ -81,7 +89,7 @@ export class SimplDB {
   public pull(key: string, value: any): void {
     if (this.data[key] instanceof Array) {
       if (this.data[key].includes(value)) this.data[key] = this.data[key].filter((v: any) => v !== value);
-    } else throw new Error('Provided key is not an array.');
+    } else throw new TypeError('Provided key is not an array.');
 
     if (this.config.saveOnUpdate) this.save();
 
@@ -120,7 +128,7 @@ export class SimplDB {
     try {
       return JSON.parse(JSON.stringify(this.data));
     } catch (err) {
-      throw new Error('Provided argument is not a valid JSON object.');
+      throw new TypeError('Provided argument is not a valid JSON object.');
     }
   }
 
