@@ -6,7 +6,7 @@ import set from 'lodash/set';
 import unset from 'lodash/unset';
 import pickBy from 'lodash/pickBy';
 
-export default class SimplDB {
+export class DB {
   private readonly config: DBConfig;
   private data: Data = {};
 
