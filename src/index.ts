@@ -8,7 +8,12 @@ export class SimplDB {
 
   constructor(config: { filePath: string; saveOnUpdate: boolean; tabSize: number }) {
     this.config = config;
+    this.checkJSON();
     this.data = this.fetchData();
+  }
+
+  private checkJSON(): void {
+    if (!FS.readFileSync(this.config.filePath, 'utf8')) this.saveOnUpdate();
   }
 
   private fetchData(): Data | never {
