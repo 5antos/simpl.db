@@ -44,7 +44,7 @@ export class SimplDB {
     }
   }
 
-  public addOrSubtract(operation: string, key: string, value: number): number | never {
+  private addOrSubtract(operation: string, key: string, value: number): number | never {
     const existentData = _.get(this.data, key, value);
 
     if (!!existentData && isNaN(existentData)) throw new Error('The value from the provided key is not a number.');
@@ -53,7 +53,7 @@ export class SimplDB {
 
     if (this.config.saveOnUpdate) this.save();
 
-    return _.get(this.data, key, value);
+    return _.get(this.data, key);
   }
 
   /* Public methods */
