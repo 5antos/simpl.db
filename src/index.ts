@@ -55,9 +55,6 @@ export class SimplDB {
 
     if (this.config.saveOnUpdate) this.save();
 
-    // tslint:disable-next-line:no-console
-    console.log(this.data);
-
     return get(this.data, key);
   }
 
@@ -68,12 +65,12 @@ export class SimplDB {
     if (this.config.saveOnUpdate) this.save();
   }
 
-  public add(key: string, value: number): void {
-    this.addOrSubtract('add', key, value);
+  public add(key: string, value: number): number | never {
+    return this.addOrSubtract('add', key, value);
   }
 
-  public subtract(key: string, value: number): void {
-    this.addOrSubtract('subtract', key, value);
+  public subtract(key: string, value: number): number | never {
+    return this.addOrSubtract('subtract', key, value);
   }
 
   public push(key: string, value: any): any[] {
