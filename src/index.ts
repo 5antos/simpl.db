@@ -6,7 +6,7 @@ import set from 'lodash/set';
 import unset from 'lodash/unset';
 import pickBy from 'lodash/pickBy';
 
-export class SimplDB {
+class SimplDB {
   private readonly config: DBConfig;
   private data: Data = {};
 
@@ -118,7 +118,11 @@ export class SimplDB {
   }
 
   public delete(key: string): boolean {
-    return unset(this.data, key);
+    const deleted = unset(this.data, key);
+
+    if (this.config.saveOnUpdate) this.save();
+
+    return deleted;
   }
 
   public filter(callback: (value: Data, index: number, array: Data) => value is any): Data {
