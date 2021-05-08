@@ -47,7 +47,7 @@ export class SimplDB {
 
   public delete(key: string): boolean {
     delete this.data[key];
-    this.save();
+    if (this.config.saveOnUpdate) this.save();
     return !this.has(key);
   }
 
