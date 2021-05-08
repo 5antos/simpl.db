@@ -36,18 +36,6 @@ export class SimplDB {
     return this.data[key];
   }
 
-  public find(callback: (value: string, index: number, array: string[]) => value is any): Data | undefined {
-    return Object.keys(this.data).find(callback);
-  }
-
-  public map(callback: (value: string, index: number, array: string[]) => any): Data {
-    return Object.keys(this.data).map(callback);
-  }
-
-  public filter(callback: (value: string, index: number, array: string[]) => value is any): Data {
-    return Object.keys(this.data).filter(callback);
-  }
-
   public has(key: string): boolean {
     return this.data.hasOwnProperty(key);
   }
