@@ -7,6 +7,7 @@ export class SimplDB {
   private data: Data = {};
 
   constructor(config: { filePath: string; saveOnUpdate: boolean; tabSize: number }) {
+    this.validatePath(config.filePath);
     this.config = config;
     this.checkJSON();
     this.data = this.fetchData();
@@ -14,6 +15,15 @@ export class SimplDB {
 
   private checkJSON(): void {
     if (!FS.readFileSync(this.config.filePath, 'utf8')) this.save();
+  }
+
+  private validatePath(filePath: string): void | never {
+    try {
+      FS.lstatSync(filePath);
+    } catch (e) {
+      if (e.code === 'ENOENT') throw new Error('Provided file does not exist.');
+      else if (e.code === 'EACCES') throw new Error('Provided file cannot be accessed.');
+    }
   }
 
   private validateJSON(json: JSON): boolean {
