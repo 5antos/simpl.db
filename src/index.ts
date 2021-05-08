@@ -33,17 +33,49 @@ export class SimplDB {
     }
   }
 
+  public addOrSubtract(operation: string, key: string, value: number): number | never {
+    if (!!this.data[key] && isNaN(this.data[key])) throw new Error('The value from the provided key is not a number.');
+    else if (!this.data[key]) this.data[key] = value;
+    else operation === 'add' ? (this.data[key] += value) : (this.data[key] -= value);
+
+    if (this.config.saveOnUpdate) this.save();
+
+    return this.data[key];
+  }
+
+  /* Public methods */
+
   public set(key: string, value: any): void {
     this.data[key] = value;
     if (this.config.saveOnUpdate) this.save();
   }
 
-  public push(key: string, value: any): void {
+  public add(key: string, value: number): void {
+    this.addOrSubtract('add', key, value);
+  }
+
+  public subtract(key: string, value: number): void {
+    this.addOrSubtract('subtract', key, value);
+  }
+
+  public push(key: string, value: any): any[] {
     if (this.data[key] instanceof Array) this.data[key].push(value);
     else if (!(this.data[key] instanceof Array) && !this.data[key]) this.data[key] = [value];
     else throw new Error('Provided key is not an array.');
 
     if (this.config.saveOnUpdate) this.save();
+
+    return this.data[key];
+  }
+
+  public pull(key: string, value: any): void {
+    if (this.data[key] instanceof Array) {
+      if (this.data[key].includes(value)) this.data[key] = this.data[key].filter((v: any) => v !== value);
+    } else throw new Error('Provided key is not an array.');
+
+    if (this.config.saveOnUpdate) this.save();
+
+    return this.data[key];
   }
 
   public get(key: string): any {
