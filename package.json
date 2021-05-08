@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "An easy-to-use local database using JSON to store data.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -12,7 +12,7 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add .",
     "postversion": "git commit -m \"New version release\" && git push origin main && git push origin main --tags",
-    "publishPackage": "npm version patch --no-git-tag-version && npm publish"
+    "publish": "npm version patch --no-git-tag-version && npm publish"
   },
   "repository": {
     "type": "git",
