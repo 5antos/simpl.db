@@ -4,7 +4,7 @@ import * as FS from 'fs';
 
 export class SimplDB {
   private readonly config: DBConfig;
-  private data: Data = {};
+  private readonly data: Data = {};
 
   constructor(config: { filePath: string; saveOnUpdate: boolean; tabSize: number }) {
     this.config = config;
@@ -13,7 +13,7 @@ export class SimplDB {
   }
 
   private checkJSON(): void {
-    if (!FS.readFileSync(this.config.filePath, 'utf8')) this.saveOnUpdate();
+    if (!FS.readFileSync(this.config.filePath, 'utf8')) this.save();
   }
 
   private fetchData(): Data | never {
@@ -34,7 +34,7 @@ export class SimplDB {
 
   public set(key: string, value: any): void {
     this.data[key] = value;
-    if (this.config.saveOnUpdate) this.saveOnUpdate();
+    if (this.config.saveOnUpdate) this.save();
   }
 
   public get(key: string): any {
@@ -46,7 +46,9 @@ export class SimplDB {
   }
 
   public delete(key: string): boolean {
-    return delete this.data[key];
+    delete this.data[key];
+    this.save();
+    return !this.has(key);
   }
 
   public save(): void {
