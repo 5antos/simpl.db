@@ -48,4 +48,8 @@ export class SimplDB {
   public delete(key: string): boolean {
     return delete this.data[key];
   }
+
+  public save(): void {
+    this.saveOnUpdate();
+  }
 }
