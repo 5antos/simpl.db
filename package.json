@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An easy-to-use local database using JSON to store data.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,7 +9,6 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add .",
     "postversion": "git commit -m \"New version release\" && git push origin main && git push origin main --tags",
