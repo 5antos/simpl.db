@@ -115,12 +115,9 @@ export class SimplDB {
     return deleted;
   }
 
-  public clear(): boolean {
+  public clear(): void {
     this.data = {};
     if (this.config.saveOnUpdate) this.save();
-    // tslint:disable-next-line:no-console
-    console.log(this.data);
-    return this.data === {};
   }
 
   public toJSON(): JSON | never {
