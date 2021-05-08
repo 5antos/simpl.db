@@ -14,7 +14,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "lib": ["es6"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "esModuleInterop": true
   },
   "include": ["src"],
