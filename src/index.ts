@@ -1,7 +1,8 @@
 import { Data } from './Utils';
 import { DBConfig } from './Config';
 import * as FS from 'fs';
-import * as _ from 'lodash';
+import get from 'lodash/get';
+import set from 'lodash/set';
 
 export class SimplDB {
   private readonly config: DBConfig;
@@ -45,15 +46,16 @@ export class SimplDB {
   }
 
   private addOrSubtract(operation: string, key: string, value: number): number | never {
-    const existentData = _.get(this.data, key, value);
+    let existentData = get(this.data, key, value);
 
     if (!!existentData && isNaN(existentData)) throw new Error('The value from the provided key is not a number.');
+    else if (!existentData) existentData = 0;
 
-    _.set(this.data, key, existentData ? (operation === 'add' ? existentData + value : existentData - value) : value);
+    set(this.data, key, operation === 'add' ? existentData + value : existentData - value);
 
     if (this.config.saveOnUpdate) this.save();
 
-    return _.get(this.data, key);
+    return get(this.data, key);
   }
 
   /* Public methods */
@@ -122,7 +124,7 @@ export class SimplDB {
   public toJSON(): JSON | never {
     try {
       return JSON.parse(JSON.stringify(this.data));
-    } catch (err) {
+    } catch (e) {
       throw new TypeError('Provided argument is not a valid JSON object.');
     }
   }
