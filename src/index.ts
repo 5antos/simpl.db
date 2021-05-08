@@ -4,7 +4,6 @@ import * as FS from 'fs';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import unset from 'lodash/unset';
-import pickBy from 'lodash/pickBy';
 
 export class SimplDB {
   private readonly config: DBConfig;
@@ -114,10 +113,6 @@ export class SimplDB {
     if (this.config.saveOnUpdate) this.save();
 
     return deleted;
-  }
-
-  public filter(callback: (value: Data, index: number, array: Data) => value is any): Data {
-    return pickBy(this.data, callback);
   }
 
   public clear(): boolean {
