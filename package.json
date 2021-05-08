@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "An easy-to-use local database using JSON to store data.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -35,7 +35,9 @@
   "homepage": "https://github.com/5antos/simpl.db#readme",
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.14.168",
     "jest": "^26.6.3",
+    "lodash": "^4.17.21",
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.6",
     "tslint": "^6.1.3",

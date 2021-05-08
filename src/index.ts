@@ -1,6 +1,7 @@
 import { Data } from './Utils';
 import { DBConfig } from './Config';
 import * as FS from 'fs';
+import * as _ from 'lodash';
 
 export class SimplDB {
   private readonly config: DBConfig;
@@ -44,21 +45,19 @@ export class SimplDB {
   }
 
   public addOrSubtract(operation: string, key: string, value: number): number | never {
-    if (key.includes('.'))
-      key = Object.keys(
-        key
-          .split('.')
-          .slice(0, -1)
-          .reduce((acc, curr) => acc[curr], this.data),
-      )[0];
+    let existentData = _.get(this.data, key, value);
 
-    if (!!this.data[key] && isNaN(this.data[key])) throw new Error('The value from the provided key is not a number.');
-    else if (!this.data[key]) this.data[key] = value;
-    else operation === 'add' ? (this.data[key] += value) : (this.data[key] -= value);
+    if (!!existentData && isNaN(existentData)) throw new Error('The value from the provided key is not a number.');
+
+    _.set(
+      this.data,
+      key,
+      existentData ? (operation === 'add' ? (existentData += value) : (existentData -= value)) : value,
+    );
 
     if (this.config.saveOnUpdate) this.save();
 
-    return this.data[key];
+    return _.get(this.data, key, value);
   }
 
   /* Public methods */
