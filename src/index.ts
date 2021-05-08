@@ -51,6 +51,9 @@ export class SimplDB {
     if (!!existentData && isNaN(existentData)) throw new Error('The value from the provided key is not a number.');
     else if (!existentData) existentData = 0;
 
+    // tslint:disable-next-line:no-console
+    console.log(`Existent Data: ${existentData}`);
+
     set(this.data, key, operation === 'add' ? existentData + value : existentData - value);
 
     if (this.config.saveOnUpdate) this.save();
