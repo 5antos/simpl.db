@@ -42,6 +42,8 @@ export class SimplDB {
     if (this.data[key] instanceof Array) this.data[key].push(value);
     else if (!(this.data[key] instanceof Array) && !this.data[key]) this.data[key] = [value];
     else throw new Error('Provided key is not an array.');
+
+    if (this.config.saveOnUpdate) this.save();
   }
 
   public get(key: string): any {
