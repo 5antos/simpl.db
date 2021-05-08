@@ -24,14 +24,6 @@ export class SimplDB {
     }
   }
 
-  private saveOnUpdate(): void {
-    try {
-      FS.writeFileSync(this.config.filePath, JSON.stringify(this.data, null, this.config.tabSize));
-    } catch (e) {
-      throw e;
-    }
-  }
-
   public set(key: string, value: any): void {
     this.data[key] = value;
     if (this.config.saveOnUpdate) this.save();
@@ -52,6 +44,10 @@ export class SimplDB {
   }
 
   public save(): void {
-    this.saveOnUpdate();
+    try {
+      FS.writeFileSync(this.config.filePath, JSON.stringify(this.data, null, this.config.tabSize));
+    } catch (e) {
+      throw e;
+    }
   }
 }
