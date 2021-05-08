@@ -7,8 +7,8 @@ export class SimplDB {
   private data: Data = {};
 
   constructor(config: { filePath: string; saveOnUpdate: boolean; tabSize: number }) {
-    this.data = this.fetchData();
     this.config = config;
+    this.data = this.fetchData();
   }
 
   private fetchData(): Data | never {
@@ -56,5 +56,3 @@ export class SimplDB {
     return delete this.data[key];
   }
 }
-
-// JSON.stringify(this.data, null, 4)
