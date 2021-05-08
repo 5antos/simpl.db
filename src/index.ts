@@ -55,6 +55,9 @@ export class SimplDB {
 
     if (this.config.saveOnUpdate) this.save();
 
+    // tslint:disable-next-line:no-console
+    console.log(this.data);
+
     return get(this.data, key);
   }
 
