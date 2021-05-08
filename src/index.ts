@@ -3,8 +3,10 @@ import { DBConfig } from './Config';
 import * as FS from 'fs';
 import get from 'lodash/get';
 import set from 'lodash/set';
+import unset from 'lodash/unset';
+import pickBy from 'lodash/pickBy';
 
-export class SimplDB {
+export default class SimplDB {
   private readonly config: DBConfig;
   private data: Data = {};
 
@@ -48,7 +50,9 @@ export class SimplDB {
   private addOrSubtract(operation: string, key: string, value: number): number | never {
     let existentData = get(this.data, key);
 
-    if (!!existentData && isNaN(existentData)) throw new Error('The value from the provided key is not a number.');
+    if (isNaN(value)) throw new TypeError('The provided value is not a number.');
+    else if (!!existentData && isNaN(existentData))
+      throw new TypeError('The value from the provided key is not a number.');
     else if (!existentData) existentData = 0;
 
     set(this.data, key, operation === 'add' ? existentData + value : existentData - value);
@@ -61,8 +65,11 @@ export class SimplDB {
   /* Public methods */
 
   public set(key: string, value: any): void {
-    this.data[key] = value;
+    set(this.data, key, value);
+
     if (this.config.saveOnUpdate) this.save();
+
+    return get(this.data, key);
   }
 
   public add(key: string, value: number): number | never {
@@ -73,28 +80,37 @@ export class SimplDB {
     return this.addOrSubtract('subtract', key, value);
   }
 
-  public push(key: string, value: any): any[] {
-    if (this.data[key] instanceof Array) this.data[key].push(value);
-    else if (!(this.data[key] instanceof Array) && !this.data[key]) this.data[key] = [value];
-    else throw new TypeError('Provided key is not an array.');
+  public push(key: string, value: any): Data {
+    let oldArray = get(this.data, key);
+
+    if (!oldArray) oldArray = [];
+    else if (!(oldArray instanceof Array)) throw new TypeError('Provided key is not an array.');
+
+    oldArray.push(value);
+
+    set(this.data, key, oldArray);
 
     if (this.config.saveOnUpdate) this.save();
 
-    return this.data[key];
+    return get(this.data, key);
   }
 
   public pull(key: string, value: any): void {
-    if (this.data[key] instanceof Array) {
-      if (this.data[key].includes(value)) this.data[key] = this.data[key].filter((v: any) => v !== value);
-    } else throw new TypeError('Provided key is not an array.');
+    let oldArray = get(this.data, key);
+
+    if (!(oldArray instanceof Array)) throw new TypeError('Provided key is not an array.');
+
+    oldArray = oldArray.filter((v: any) => v !== value);
+
+    set(this.data, key, oldArray);
 
     if (this.config.saveOnUpdate) this.save();
 
-    return this.data[key];
+    return get(this.data, key);
   }
 
   public get(key: string): any {
-    return this.data[key];
+    return get(this.data, key);
   }
 
   public has(key: string): boolean {
@@ -102,11 +118,11 @@ export class SimplDB {
   }
 
   public delete(key: string): boolean {
-    if (!this.has(key)) return false;
+    return unset(this.data, key);
+  }
 
-    delete this.data[key];
-    if (this.config.saveOnUpdate) this.save();
-    return !this.has(key);
+  public filter(callback: (value: Data, index: number, array: Data) => value is any): Data {
+    return pickBy(this.data, callback);
   }
 
   public clear(): boolean {
