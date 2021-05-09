@@ -2,7 +2,7 @@
   "name": "simpl.db",
   "version": "0.0.50",
   "description": "A lightweight, easy-to-use local database using JSON to store data.",
-  "main": "lib/index.js",
+  "main": "index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "github": "git commit -m \"Updating\" && git push origin main && git push origin main --tags",
