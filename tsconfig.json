@@ -15,11 +15,10 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "lib": [
-      "es6",
-      "dom"
+      "es6"
     ],
     "esModuleInterop": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["node_modules"]
 }
