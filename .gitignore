@@ -3,3 +3,4 @@ src
 .idea
 package-lock.json
 lib/*.d.ts
+*.ts
