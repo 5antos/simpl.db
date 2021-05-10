@@ -5,4 +5,3 @@ src
 package-lock.json
 lib/*.d.ts
 index.ts
-.idea
