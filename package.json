@@ -9,9 +9,8 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "preversion": "npm run lint",
-    "version": "npm run format && git add .",
     "postversion": "git commit -m \"New version release\" && git push origin main && git push origin main --tags",
-    "publishPackage": "npm version patch --no-git-tag-version && npm publish"
+    "publishPackage": "npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
