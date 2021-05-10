@@ -18,7 +18,7 @@ Example Usage
 ```js
 const SimplDB = require('simpl.db');
 
-// The path for the JSON file must start from the root of the project!
+// The path for the JSON file must start from the root of the project
 const db = new SimplDB({ filePath: './db.json' });
 
 db.set('money', 100);
@@ -34,14 +34,12 @@ db.get('person.job'); // undefined
 db.toJSON(); // { money: 100, person: { name: 'Peter' } }
 ```
 
-More examples can be found in [the examples folder](https://github.com/5antos/simpl.db/tree/master/examples).
-
 Contributing
 ------------
 
 Before [creating an issue](https://github.com/5antos/simpl.db/issues), please ensure that it hasn't already been reported or suggested.
 
-When [submitting a new pull request](https://github.com/5antos/simpl.db/pulls) please make sure the code style/format used is the same.
+When [submitting a new pull request](https://github.com/5antos/simpl.db/pulls), please make sure the code style/format used is the same as the original code.
 
 License
 -------
