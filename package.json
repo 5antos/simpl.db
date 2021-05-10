@@ -9,7 +9,6 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "preversion": "npm run lint",
-    "commitAndPush": "git commit -m \"New version release\" && git push origin main && git push origin main --tags",
     "publishPackage": "npm version patch && npm publish"
   },
   "repository": {
@@ -45,8 +44,5 @@
   },
   "dependencies": {
     "lodash": "^4.17.21"
-  },
-  "files": [
-    "lib/**/*"
-  ]
+  }
 }
