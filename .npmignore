@@ -1,6 +1,4 @@
 node_modules
-tslint.json
 package-lock.json
-lib/*.d.ts
 index.ts
 .idea
