@@ -5,7 +5,7 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
-    "github": "git commit -m \"Updating\" && git push origin main && git push origin main --tags",
+    "github": "git commit -m \"Updating\" && git push origin main --tags",
     "publishPackage": "npm version patch && npm publish"
   },
   "repository": {
