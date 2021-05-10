@@ -2,8 +2,8 @@
   "name": "simpl.db",
   "version": "0.0.50",
   "description": "A lightweight, easy-to-use local database using JSON to store data.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./index.js",
+  "typings": "./index.d.ts",
   "scripts": {
     "github": "git commit -m \"Updating\" && git push origin main && git push origin main --tags",
     "build": "tsc",
@@ -13,13 +13,7 @@
     "preversion": "npm run lint",
     "version": "npm run format && git add .",
     "postversion": "git commit -m \"New version release\" && git push origin main && git push origin main --tags",
-    "publishPackage": "npm version patch --no-git-tag-version && npm publish",
-
-    "lint:js": "eslint -c .eslintrc.yml lib *.js",
-    "lint:js:fix": "eslint -c .eslintrc.yml lib *.js --fix && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\"",
-    "lint:ts": "eslint -c .eslintrc.ts.yml *.ts",
-    "lint:ts:fix": "eslint -c .eslintrc.ts.yml *.ts --fix && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\"",
-    "clean-lint": "npm run lint:js && npm run lint:js:fix && npm run lint:ts && npm run lint:ts:fix"
+    "publishPackage": "npm version patch --no-git-tag-version && npm publish"
   },
   "repository": {
     "type": "git",
