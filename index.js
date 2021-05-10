@@ -6,6 +6,6 @@ function SimplDB(config) {
   return new Database(config);
 }
 
-SimplDB.Database = Database
+SimplDB.Database = Database;
 
-module.exports = SimplDB
+module.exports = SimplDB;
