@@ -6,8 +6,6 @@
   "typings": "./index.d.ts",
   "scripts": {
     "github": "git commit -m \"Updating\" && git push origin main && git push origin main --tags",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint -p tsconfig.json",
     "preversion": "npm run lint",
     "publishPackage": "npm version patch && npm publish"
   },
