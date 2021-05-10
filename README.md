@@ -6,8 +6,6 @@ A lightweight, easy-to-use local database using JSON to store data.
 Installation
 ------------
 
-Node.js 10.4+ is required.
-
 ```
 npm install simpl.db
 ```
