@@ -1,12 +1,11 @@
 {
   "name": "simpl.db",
-  "version": "1.0.7",
+  "version": "1.0.0",
   "description": "A lightweight, easy-to-use local database using JSON to store data.",
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
     "github": "git commit -m \"Updating\" && git push origin main && git push origin main --tags",
-    "preversion": "npm run lint",
     "publishPackage": "npm version patch && npm publish"
   },
   "repository": {
