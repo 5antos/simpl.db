@@ -3,6 +3,7 @@ declare function SimplDB(config: SimplDB.Config): SimplDB.Database;
 declare namespace SimplDB {
   interface Config {
     filePath: string;
+    encryptionKey: string;
     saveOnUpdate: boolean;
     tabSize: number;
   }
