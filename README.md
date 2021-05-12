@@ -1,4 +1,4 @@
-Simpl.DB ![NPM Version](https://img.shields.io/npm/v/simpl.db.svg?label=npm&url=https://npmjs.com/package/simpl.db)
+Simpl.DB ![NPM Version](https://img.shields.io/npm/v/simpl.db.svg?color=3884FF&label=npm&url=https://npmjs.com/package/simpl.db)
 ===
 
 <a href="https://www.buymeacoffee.com/5antos" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="41" width="174"></a>
