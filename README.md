@@ -34,7 +34,7 @@ db.has('person.age'); // false
 db.get('person.name'); // 'Peter'
 db.get('person.job'); // undefined
 
- // { money: 100, person: { name: 'Peter' } }
+db.toJSON(); // { money: 100, person: { name: 'Peter' } }
 ```
 
 Contributing
