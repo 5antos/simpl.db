@@ -1,7 +1,12 @@
-Simpl.DB [![NPM Version](https://img.shields.io/npm/v/simpl.db.svg?style=flat-round)]((https://npmjs.com/package/simpl.db))
+Simpl.DB ![NPM Version](https://img.shields.io/npm/v/simpl.db.svg?color=3884FF&label=npm&url=https://npmjs.com/package/simpl.db)
 ===
 
+<a href="https://www.buymeacoffee.com/5antos" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 A lightweight, easy-to-use local database using JSON to store data.
+
+- **[Documentation](https://simpldb.gitbook.io/docs/)**
+- **[NPM Package](https://npmjs.com/package/simpl.db)**
 
 Installation
 ------------
@@ -29,7 +34,7 @@ db.has('person.age'); // false
 db.get('person.name'); // 'Peter'
 db.get('person.job'); // undefined
 
-db.toJSON(); // { money: 100, person: { name: 'Peter' } }
+ // { money: 100, person: { name: 'Peter' } }
 ```
 
 Contributing

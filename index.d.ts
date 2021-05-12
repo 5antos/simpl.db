@@ -16,6 +16,11 @@ declare namespace SimplDB {
     data: { [s: string]: any };
     constructor(config: Config);
     #checkJSON;
+    #decrypt;
+    #encrypt;
+    #validateBeforeDecrypt;
+    #validateBeforeEncrypt;
+    #validateEncryptionKey;
     #validatePath;
     #fetchData;
     #addOrSubtract;
