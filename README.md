@@ -2,7 +2,7 @@
   <h1>Simpl.DB</h1>
   <p>
     <a href="https://www.npmjs.com/package/simpl.db"><img src="https://img.shields.io/npm/v/simpl.db.svg?color=3884FF&label=npm" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/npm/dt/simpl.db.svg?color=3884FF&maxAge=3600" alt="NPM downloads" /></a>
+    <a href="https://www.npmjs.com/package/simpl.db"><img src="https://img.shields.io/npm/dt/simpl.db.svg?color=3884FF&maxAge=3600" alt="NPM downloads" /></a>
   </p>
   <p>
     <a href="https://www.buymeacoffee.com/5antos" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="41" width="174"></a>
