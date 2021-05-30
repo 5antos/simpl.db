@@ -12,7 +12,7 @@
   <br><br>
 </div>
 
-A lightweight, easy-to-use local database using JSON to store data.
+A lightweight, 0 dependency, easy-to-use local database using JSON to store data.
 
 - **[Documentation](https://simpldb.gitbook.io/docs/)**
 - **[NPM Package](https://npmjs.com/package/simpl.db)**
