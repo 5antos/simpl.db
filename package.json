@@ -24,6 +24,7 @@
     "url": "https://github.com/5antos/simpl.db/issues"
   },
   "homepage": "https://simpldb.gitbook.io/docs/",
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^15.0.2",
     "typescript": "^4.2.4"
