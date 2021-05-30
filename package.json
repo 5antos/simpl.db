@@ -1,7 +1,7 @@
 {
   "name": "simpl.db",
   "version": "2.0.1",
-  "description": "A lightweight, easy-to-use local database using JSON to store data.",
+  "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data.",
   "main": "./index.js",
   "typings": "./index.d.ts",
   "repository": {
