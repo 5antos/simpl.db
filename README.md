@@ -28,9 +28,7 @@ Example Usage
 
 ```js
 const SimplDB = require('simpl.db');
-
-// The path for the JSON file must start from the root of the project
-const db = new SimplDB({ filePath: './db.json' });
+const db = new SimplDB();
 
 db.set('money', 100);
 db.set('person.name', 'Peter');
