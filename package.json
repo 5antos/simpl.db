@@ -4,8 +4,6 @@
   "description": "A lightweight, easy-to-use local database using JSON to store data.",
   "main": "./index.js",
   "typings": "./index.d.ts",
-  "scripts": {
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/5antos/simpl.db.git"
