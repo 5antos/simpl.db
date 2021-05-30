@@ -1,41 +1,74 @@
-declare function SimplDB(config: SimplDB.Config): SimplDB.Database;
+declare function SimplDB(config: SimplDB.DBConfig): SimplDB.Database;
 
 declare namespace SimplDB {
-  interface Config {
-    filePath: string;
+  interface DBConfig {
+    autoSave: boolean;
+    collectionsFolder: string;
+    dataFile: string;
     encryptionKey: string;
-    saveOnUpdate: boolean;
     tabSize: number;
   }
-
-  interface Data {
-    [key: string]: any;
+  
+  interface CollectionConfig {
+    autoSave: boolean;
+    folderPath: string;
+    tabSize: number;
   }
-
+  
+  type JSONData = string | number | Data | JSONData[] | boolean | null;
+  
+  interface Data {
+    [key: string]: JSONData;
+  }
+  
   export class Database {
-    config: Config;
-    data: { [s: string]: any };
-    constructor(config: Config);
+    #config: DBConfig;
+    #data: Data;
+    collections: Collection[];
+    version: string;
+    constructor(config: DBConfig);
+    #addOrSubtract;
     #checkJSON;
     #decrypt;
     #encrypt;
+    #fetchData;
     #validateBeforeDecrypt;
     #validateBeforeEncrypt;
     #validateEncryptionKey;
+    #validateFolderPath;
     #validatePath;
-    #fetchData;
-    #addOrSubtract;
-    set(key: string, value: any): void;
-    add(key: string, value: number): number | never;
-    subtract(key: string, value: number): number | never;
-    push(key: string, value: any): Data;
-    pull(key: string, value: any): void;
-    get(key: string): any;
-    has(key: string): boolean;
-    delete(key: string): boolean;
+    add(key: string, value: number): number|Data|never;
     clear(): void;
-    toJSON(): JSON | never;
-    save(): void;
+    createCollection(name: string, defaultValues: Data): Collection|never;
+    delete(key: string): boolean|never;
+    get(key: string, decrypt: boolean): JSONData|never;
+    has(key: string): boolean|never;
+    pull(key: string, value: JSONData): JSONData|never;
+    push(key: string, value: JSONData): JSONData|never;
+    save(): void|never;
+    set(key: string, value: JSONData): JSONData|Data|never;
+    subtract(key: string, value: number): number|JSONData|never;
+    toJSON(): Data;
+  }
+  
+  type Filter<T extends any[]> = (...args: T) => boolean | Promise<boolean>;
+  
+  export class Collection {
+    #config: CollectionConfig;
+    #data: Data[];
+    defaultValues: Data;
+    entries: number;
+    name: string;
+    constructor(config: CollectionConfig, name: string, defaultValues: Data);
+    #checkDefaultValues;
+    #checkEntry;
+    #checkName;
+    #fetchData;
+    create(data: Data): Data[]|never;
+    get(filter: Filter<[Data]>): Data|Data[]|never;
+    remove(filter: Filter<[Data]>): Data[]|never;
+    save(): void|never;
+    update(data: Data, filter: Filter<[Data]>): Data[]|never;
   }
 }
 
