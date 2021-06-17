@@ -26,7 +26,7 @@ declare namespace SimplDB {
     #data: Data;
     collections: Collection[];
     version: string;
-    constructor(config: DBConfig);
+    constructor(config?: DBConfig);
     #addOrSubtract;
     #checkJSON;
     #decrypt;
@@ -39,19 +39,19 @@ declare namespace SimplDB {
     #validatePath;
     add(key: string, value: number): number|Data|never;
     clear(): void;
-    createCollection(name: string, defaultValues: Data): Collection|never;
+    createCollection(name: string, defaultValues?: Data): Collection|never;
     delete(key: string): boolean|never;
-    get(key: string, decrypt: boolean): JSONData|never;
+    get(key: string, decrypt?: boolean): JSONData|never;
     has(key: string): boolean|never;
     pull(key: string, value: JSONData): JSONData|never;
     push(key: string, value: JSONData): JSONData|never;
     save(): void|never;
-    set(key: string, value: JSONData): JSONData|Data|never;
+    set(key: string, value: JSONData, encrypt?: boolean): JSONData|Data|never;
     subtract(key: string, value: number): number|JSONData|never;
     toJSON(): Data;
   }
   
-  type Filter<T extends any[]> = (...args: T) => boolean | Promise<boolean>;
+  // type Filter<T extends any[]> = (...args: T) => boolean | Promise<boolean>;
   
   export class Collection {
     #config: CollectionConfig;
@@ -65,10 +65,11 @@ declare namespace SimplDB {
     #checkName;
     #fetchData;
     create(data: Data): Data[]|never;
-    get(filter: Filter<[Data]>): Data|Data[]|never;
-    remove(filter: Filter<[Data]>): Data[]|never;
+    get(filter?: Function): Data|Data[]|never;
+    has(filter: Function): boolean|never;
+    remove(filter: Function): Data[]|never;
     save(): void|never;
-    update(data: Data, filter: Filter<[Data]>): Data[]|never;
+    update(data: Data, filter?: Function): Data[]|never;
   }
 }
 

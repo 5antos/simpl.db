@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data.",
   "main": "./index.js",
   "typings": "./index.d.ts",
@@ -25,7 +25,6 @@
   },
   "homepage": "https://simpldb.js.org",
   "devDependencies": {
-    "@types/node": "^15.0.2",
-    "typescript": "^4.2.4"
+    "@types/node": "^15.0.2"
   }
 }
