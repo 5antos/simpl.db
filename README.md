@@ -28,8 +28,8 @@ Example Usage
 -------------
 
 ```js
-const SimplDB = require('simpl.db');
-const db = new SimplDB();
+const { Database } = require('simpl.db');
+const db = new Database();
 
 db.set('money', 100);
 db.set('person.name', 'Peter');
