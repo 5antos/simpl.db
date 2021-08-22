@@ -1,23 +1,27 @@
-declare function SimplDB(config: SimplDB.DBConfig): SimplDB.Database;
+// declare class SimplDB {
+//   constructor(config?: SimplDB.DBConfig)
+// }
+
+declare function SimplDB(config?: SimplDB.DBConfig): SimplDB.Database;
 
 declare namespace SimplDB {
-  interface DBConfig {
-    autoSave: boolean;
-    collectionsFolder: string;
-    dataFile: string;
-    encryptionKey: string;
-    tabSize: number;
+  type DBConfig = {
+    autoSave?: boolean;
+    collectionsFolder?: string;
+    dataFile?: string;
+    encryptionKey?: string;
+    tabSize?: number;
   }
   
-  interface CollectionConfig {
-    autoSave: boolean;
-    folderPath: string;
-    tabSize: number;
+  type CollectionConfig = {
+    autoSave?: boolean;
+    folderPath?: string;
+    tabSize?: number;
   }
   
   type JSONData = string | number | Data | JSONData[] | boolean | null;
   
-  interface Data {
+  type Data = {
     [key: string]: JSONData;
   }
   
@@ -67,7 +71,8 @@ declare namespace SimplDB {
     create(data: Data): Data[]|never;
     get(filter?: Function): Data|Data[]|never;
     has(filter: Function): boolean|never;
-    remove(filter: Function): Data[]|never;
+    random(amount?: number): Data|Data[]|never;
+    remove(filter?: Function): Data[]|never;
     save(): void|never;
     update(data: Data, filter?: Function): Data[]|never;
   }
