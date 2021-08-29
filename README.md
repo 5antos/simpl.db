@@ -27,6 +27,7 @@ npm install simpl.db
 Example Usage
 -------------
 
+###Database
 ```js
 const { Database } = require('simpl.db');
 const db = new Database();
@@ -42,6 +43,20 @@ db.get('person.name'); // 'Peter'
 db.get('person.job'); // undefined
 
 db.toJSON(); // { money: 100, person: { name: 'Peter' } }
+```
+
+###Collections
+```js
+const { Database } = require('simpl.db');
+const db = new Database();
+
+const Users = db.createCollection('users');
+
+Users.create({ name: 'Peter', age: 19 });
+Users.create({ name: 'John', age: 19 });
+
+Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 19 }
+Users.get(user => user.age > 18); // [{ name: 'Peter', age: 19 }, { name: 'John', age: 19 }]
 ```
 
 Contributing

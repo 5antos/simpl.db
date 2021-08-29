@@ -45,6 +45,7 @@ declare namespace SimplDB {
     clear(): void;
     createCollection(name: string, defaultValues?: Data): Collection|never;
     delete(key: string): boolean|never;
+    fetch(key: string): JSONData|never;
     get(key: string, decrypt?: boolean): JSONData|never;
     has(key: string): boolean|never;
     pull(key: string, value: JSONData): JSONData|never;
@@ -66,15 +67,19 @@ declare namespace SimplDB {
     constructor(config: CollectionConfig, name: string, defaultValues: Data);
     #checkDefaultValues;
     #checkEntry;
+    #checkFilter;
     #checkName;
     #fetchData;
     create(data: Data): Data[]|never;
+    fetch(filter?: Function): Data|Data[]|never;
     get(filter?: Function): Data|Data[]|never;
+    getOrCreate(filter: Function, data: Data): Data|Data[]|never;
     has(filter: Function): boolean|never;
     random(amount?: number): Data|Data[]|never;
     remove(filter?: Function): Data[]|never;
     save(): void|never;
     update(data: Data, filter?: Function): Data[]|never;
+    updateOrCreate(data: Data, filter: Function): Data[]|never;
   }
 }
 
