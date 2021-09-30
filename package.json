@@ -1,7 +1,7 @@
 {
   "name": "simpl.db",
-  "version": "2.3.3",
-  "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data.",
+  "version": "2.3.4",
+  "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data",
   "license": "MIT",
   "author": "5antos#4876",
   "main": "./index.js",
@@ -24,7 +24,7 @@
     "url": "https://github.com/5antos/simpl.db/issues"
   },
   "homepage": "https://simpldb.js.org",
-  "devDependencies": {
-    "@types/node": "^15.0.2"
+  "dependencies": {
+    "@types/node": "^16.10.2"
   }
 }
