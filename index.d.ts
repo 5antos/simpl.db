@@ -72,6 +72,7 @@ declare namespace SimplDB {
     #fetchData;
     create(data: Data): Data[]|never;
     fetch(filter?: Function): Data|Data[]|never;
+    fetchOrCreate(filter: Function, data: Data): Data|Data[]|never;
     get(filter?: Function): Data|Data[]|never;
     getOrCreate(filter: Function, data: Data): Data|Data[]|never;
     has(filter: Function): boolean|never;
