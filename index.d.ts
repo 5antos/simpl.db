@@ -64,7 +64,7 @@ declare namespace SimplDB {
     defaultValues: Data;
     entries: number;
     name: string;
-    constructor(config: CollectionConfig, name: string, defaultValues: Data);
+    constructor(config: CollectionConfig, name: string, defaultValues?: Data);
     #checkDefaultValues;
     #checkEntry;
     #checkFilter;

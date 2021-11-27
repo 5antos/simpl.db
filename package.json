@@ -26,5 +26,8 @@
   "homepage": "https://simpldb.js.org",
   "devDependencies": {
     "@types/node": "^16.10.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
