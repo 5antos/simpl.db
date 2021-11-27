@@ -80,7 +80,6 @@ declare namespace SimplDB {
     remove(filter?: Function): Data[]|never;
     save(): void|never;
     update(updateCallback: Function, filter?: Function): Data[]|never;
-    updateOrCreate(data: Data, filter: Function): Data[]|never;
   }
 }
 
