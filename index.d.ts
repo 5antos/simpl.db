@@ -79,7 +79,7 @@ declare namespace SimplDB {
     random(amount?: number): Data|Data[]|never;
     remove(filter?: Function): Data[]|never;
     save(): void|never;
-    update(data: Data, filter?: Function): Data[]|never;
+    update(updateCallback: Function, filter?: Function): Data[]|never;
     updateOrCreate(data: Data, filter: Function): Data[]|never;
   }
 }
