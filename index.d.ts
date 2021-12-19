@@ -43,7 +43,7 @@ declare namespace SimplDB {
     #validatePath;
     add(key: string, value: number): number|Data|never;
     clear(): void;
-    createCollection<Type extends Collection>(name: string, Collection?: Type, defaultValues?: Data): Type|never;
+    createCollection<Type extends Collection>(name: string, Collection?: Constructable<Type>, defaultValues?: Data): Type|never;
     delete(key: string): boolean|never;
     fetch(key: string): JSONData|never;
     get(key: string, decrypt?: boolean): JSONData|never;
@@ -57,6 +57,7 @@ declare namespace SimplDB {
   }
   
   // type Filter<T extends any[]> = (...args: T) => boolean | Promise<boolean>;
+  type Constructable<T> = new (...args: any[]) => T
   
   export class Collection {
     #config: CollectionConfig;
