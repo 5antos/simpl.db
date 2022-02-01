@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data",
   "license": "MIT",
   "author": "5antos#4876",
