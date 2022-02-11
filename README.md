@@ -58,8 +58,13 @@ const Users = db.createCollection('users');
 Users.create({ name: 'Peter', age: 19 });
 Users.create({ name: 'John', age: 19 });
 
-Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 19 }
-Users.get(user => user.age > 18); // [{ name: 'Peter', age: 19 }, { name: 'John', age: 19 }]
+Users.update(
+  user => user.age = 20,
+  target => target.name === 'Peter'
+);
+
+Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 20 }
+Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
 ```
 
 Contributing
