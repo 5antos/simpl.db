@@ -45,6 +45,7 @@ declare namespace SimplDB {
     clear(): void;
     createCollection(name: string, defaultValues?: Data): Collection|never;
     delete(key: string): boolean|never;
+    deleteCollection(name: string): boolean|never;
     fetch(key: string): JSONData|never;
     get(key: string, decrypt?: boolean): JSONData|never;
     has(key: string): boolean|never;
@@ -55,9 +56,7 @@ declare namespace SimplDB {
     subtract(key: string, value: number): number|JSONData|never;
     toJSON(): Data;
   }
-  
-  // type Filter<T extends any[]> = (...args: T) => boolean | Promise<boolean>;
-  
+    
   export class Collection {
     #config: CollectionConfig;
     #data: Data[];
