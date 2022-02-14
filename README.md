@@ -70,6 +70,31 @@ Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 20 }
 Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
 ```
 
+<p>With TypeScript:</p>
+
+```ts
+const { Database } = require('simpl.db');
+const db = new Database();
+
+type User = {
+  name: string
+  age: number
+}
+
+const Users = db.createCollection<User>('users');
+
+Users.create({ name: 'Peter', age: 19 });
+Users.create({ name: 'John', age: 19 });
+
+Users.update(
+  user => user.age = 20,
+  target => target.name === 'Peter'
+);
+
+Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 20 }
+Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
+```
+
 Contributing
 ------------
 
