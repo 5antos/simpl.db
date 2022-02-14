@@ -1,11 +1,11 @@
 {
   "name": "simpl.db",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data",
   "license": "MIT",
   "author": "5antos#4876",
   "main": "./index.js",
-  "typings": "./index.d.ts",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/5antos/simpl.db.git"
