@@ -4,6 +4,7 @@ declare namespace SimplDB {
   export type DBConfig = {
     autoSave?: boolean;
     collectionsFolder?: string;
+    collectionTimestamps?: boolean;
     dataFile?: string;
     encryptionKey?: string;
     tabSize?: number;
@@ -13,6 +14,7 @@ declare namespace SimplDB {
     autoSave?: boolean;
     folderPath?: string;
     tabSize?: number;
+    timestamps?: boolean;
   }
   
   export type JSONData = string | number | Data | JSONData[] | boolean | null;
@@ -58,6 +60,7 @@ declare namespace SimplDB {
      * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {boolean} [config.autoSave] Whether or not to write new data to the JSON file everytime it is updated
      * @param {string} [config.collectionsFolder] The path to a folder where collections' data will be stored
+     * @param {string} [config.collectionTimestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every collection entry
      * @param {string} [config.encryptionKey] The Encryption Key to be used when encrypting and decrypting data
      * @param {number} [config.tabSize] The size of the tab in the JSON file (indentation)
      */
@@ -205,6 +208,7 @@ declare namespace SimplDB {
      * @param {boolean} [config.autoSave] Whether or not to write data into the JSON file everytime it is updated
      * @param {string} [config.folderPath] The path where the collection's data will be stored
      * @param {string} [config.tabSize] The size of the tab in the JSON file (indentation)
+     * @param {string} [config.timestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every entry
      * @param {string} name The name of the collection
      * @param {DefaultValues<T>} defaultValues Default values for omitted keys
      */
