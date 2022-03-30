@@ -276,7 +276,7 @@ declare namespace SimplDB {
     /**
      * Removes the data that matches the provided filter.
      * Removes all the data from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply. If this parameter is not provided, all data from the collection will be removed
+     * @param {Filter<T>} [filter] Filter to apply. If this parameter is not provided, all data from the collection will be targeted
      * @returns {T[]}
      */
     remove(filter?: Filter<T>): T[]|never;
@@ -298,7 +298,7 @@ declare namespace SimplDB {
      * Updates the data from the collection that matches the provided filter with the callback.
      * Updates all the data from the collection if no filter is provided.
      * @param {UpdateCallback<T>} updateCallback Function to run for each entry returned by the filter
-     * @param {Filter<T>} [filter] Filter to apply. If this parameter is not provided, all data from the collection will be updated
+     * @param {Filter<T>} [filter] Filter to apply. If this parameter is not provided, all data from the collection will be targeted
      * @returns {T[]}
      */
     update(updateCallback: UpdateCallback<T>, filter?: Filter<T>): T[]|never;
