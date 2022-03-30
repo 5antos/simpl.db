@@ -282,6 +282,14 @@ declare namespace SimplDB {
     remove(filter?: Filter<T>): T[]|never;
 
     /**
+     * Resets the keys with default values from the data that matches the provided filter to the collection's default values.
+     * Resets the keys with default values from all the data from the collection if no filter is provided.
+     * @param {Filter<T>} [filter] Filter to apply. If this parameter is not provided, all data from the collection will be targeted
+     * @returns {T[]}
+     */
+    reset(filter?: Filter<T>): T[]|never;
+
+    /**
      * Writes the cached data into the collection's JSON file.
      */
     save(): void|never;
