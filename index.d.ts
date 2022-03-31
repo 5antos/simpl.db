@@ -109,7 +109,7 @@ declare namespace SimplDB {
 
     /**
      * Deletes a collection.
-     * Returns true if the collection is successfully deleted and false otherwise.
+     * Returns a boolean based on whether the collection was successfully deleted or not.
      * @param {string} name The name of the collection
      * @returns {boolean}
      */
@@ -125,7 +125,7 @@ declare namespace SimplDB {
     /**
      * Returns the value of the provided key.
      * @param {string} key The key to get the value from
-     * @param {boolean} [decrypt=false] Whether or not to decrypt the returned value. Defaults to false
+     * @param {boolean} [decrypt=false] Whether or not to decrypt the returned value
      * @returns {JSONData}
      */
     get(key: string, decrypt?: boolean): JSONData|never;
@@ -162,7 +162,7 @@ declare namespace SimplDB {
      * Sets a new value to the value of the provided key.
      * @param {string} key The target key
      * @param {JSONData} value The value to set
-     * @param {boolean} [encrypt=false] Whether or not to encrypt the value before setting it. Defaults to false
+     * @param {boolean} [encrypt=false] Whether or not to encrypt the value before setting it
      * @returns {JSONData|Data}
      */
     set(key: string, value: JSONData, encrypt?: boolean): JSONData|Data|never;
@@ -228,15 +228,16 @@ declare namespace SimplDB {
     create(data: Partial<T>): T|never;
 
     /**
-     * Fetches the data directly from the JSON file and returns the one that matches the provided filter.
-     * Fetches and returns all the data from the collection if no filter is provided.
+     * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
+     * Fetches and returns all the entries from the collection if no filter is provided.
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T|T[]}
      */
     fetch(filter?: Filter<T>): T|T[]|never;
 
     /**
-     * Fetches the data directly from the JSON file or, if no data is found, creates and pushes a new entry into the collection with the provided data.
+     * Fetches the entries that match the provided filter directly from the JSON file.
+     * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Function} filter Filter to apply
      * @param {Data} data Entry's data
      * @returns {Data|Data[]}
@@ -244,15 +245,16 @@ declare namespace SimplDB {
     fetchOrCreate(filter: Filter<T>, data: T): T|T[]|never;
 
     /**
-     * Returns the data that matches the provided filter.
-     * Returns all the data from the collection if no filter is provided.
+     * Returns the entries that match the provided filter.
+     * Returns all the entries from the collection if no filter is provided.
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T|T[]}
      */
     get(filter?: Filter<T>): T|T[]|never;
 
     /**
-     * Returns the data that matches the provided filter or, if no data is found, creates and pushes a new entry into the collection with the provided data.
+     * Returns the entries that match the provided filter
+     * If no data is found, creates and pushes a new one with the provided data into the collection.
      * @param {Filter<T>} filter Filter to apply
      * @param {Partial<T>} data Entry's data
      * @returns {T|T[]}
@@ -260,7 +262,7 @@ declare namespace SimplDB {
     getOrCreate(filter: Filter<T>, data: Partial<T>): T|T[]|never;
 
     /**
-     * Checks if there is any data matching the provided filter.
+     * Checks if there is any entry matching the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {boolean}
      */
@@ -274,17 +276,17 @@ declare namespace SimplDB {
     random(amount?: number): T|T[]|never;
 
     /**
-     * Removes the data that matches the provided filter.
-     * Removes all the data from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply.
+     * Removes the entries that match the provided filter.
+     * Removes all the entries from the collection if no filter is provided.
+     * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
     remove(filter?: Filter<T>): T[]|never;
 
     /**
-     * Resets the keys with default values from the data that matches the provided filter to the collection's default values.
-     * Resets the keys with default values from all the data from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply.
+     * Resets the keys with default values from the entries that match the provided filter to their default values.
+     * Resets the keys with default values from all the entries from the collection if no filter is provided.
+     * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
     reset(filter?: Filter<T>): T[]|never;
@@ -295,10 +297,10 @@ declare namespace SimplDB {
     save(): void|never;
 
     /**
-     * Updates the data from the collection that matches the provided filter with the callback.
-     * Updates all the data from the collection if no filter is provided.
+     * Updates the entries that match the provided filter with the provided callback.
+     * Updates all the entries if no filter is provided.
      * @param {UpdateCallback<T>} updateCallback Function to run for each entry returned by the filter
-     * @param {Filter<T>} [filter] Filter to apply.
+     * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
     update(updateCallback: UpdateCallback<T>, filter?: Filter<T>): T[]|never;
