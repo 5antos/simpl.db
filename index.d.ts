@@ -101,7 +101,6 @@ declare namespace SimplDB {
 
     /**
      * Deletes a key.
-     * Returns a boolean based on whether the key was successfully deleted or not.
      * @param {string} key The key to delete
      * @returns {boolean}
      */
@@ -109,14 +108,13 @@ declare namespace SimplDB {
 
     /**
      * Deletes a collection.
-     * Returns a boolean based on whether the collection was successfully deleted or not.
      * @param {string} name The name of the collection
      * @returns {boolean}
      */
     deleteCollection(name: string): boolean|never;
 
     /**
-     * Fetches the data directly from the JSON file and returns the value of the provided key.
+     * Returns the value of the provided key directly from the JSON file.
      * @param {string} key The key to get the value from
      * @returns {JSONData}
      */
@@ -131,7 +129,7 @@ declare namespace SimplDB {
     get(key: string, decrypt?: boolean): JSONData|never;
 
     /**
-     * Returns a boolean based on whether an element or property exists or not.
+     * Checks if the provided key exists.
      * @param {string} key The key that will be checked
      * @returns {boolean}
      */
