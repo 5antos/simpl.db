@@ -251,7 +251,7 @@ declare namespace SimplDB {
     get(filter?: Filter<T>): T|T[]|never;
 
     /**
-     * Returns the entries that match the provided filter
+     * Returns the entries that match the provided filter.
      * If no data is found, creates and pushes a new one with the provided data into the collection.
      * @param {Filter<T>} filter Filter to apply
      * @param {Partial<T>} data Entry's data
