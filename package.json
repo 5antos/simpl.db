@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/node": "^16.10.2",
     "eslint": "^8.12.0",
+    "husky": "^7.0.0",
     "jest": "^27.5.1"
   },
   "engines": {
@@ -35,6 +36,7 @@
   "scripts": {
     "test": "npm run lint && jest",
     "lint": "eslint .",
-    "fix": "eslint --fix ."
+    "fix": "eslint --fix .",
+    "prepare": "husky install"
   }
 }
