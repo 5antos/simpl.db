@@ -226,6 +226,13 @@ declare namespace SimplDB {
     create(data: Partial<T>): T|never;
 
     /**
+     * Creates and pushes more than one entry into the collection.
+     * @param {...Partial<T>} entries Entries's data
+     * @returns {T[]}
+     */
+    createBulk(...entries: Partial<T>): T[]|never;
+
+    /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
      * Fetches and returns all the entries from the collection if no filter is provided.
      * @param {Filter<T>} [filter] Filter to apply
