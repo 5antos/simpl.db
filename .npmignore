@@ -3,3 +3,8 @@ package-lock.json
 index.ts
 .idea
 coverage
+.husky
+.vscode
+tests
+.eslintrc.json
+jest.config.js
