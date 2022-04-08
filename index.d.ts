@@ -209,13 +209,13 @@ declare namespace SimplDB {
 
     /**
      * @constructor
-     * @param {string} name The name of the collection
      * @param {CollectionConfig} config The configuration to use in the collection
      * @param {boolean} [config.autoSave] Whether or not to write data into the JSON file everytime it is updated
      * @param {string} [config.folderPath] The path where the collection's data will be stored
      * @param {string} [config.tabSize] The size of the tab in the JSON file (indentation)
      * @param {string} [config.timestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every entry
-     * @param {DefaultValues<T>} [defaultValues] Default values for omitted keys
+     * @param {string} name The name of the collection
+     * @param {DefaultValues<T>} defaultValues Default values for omitted keys
      */
     private constructor(name: string, config: CollectionConfig, defaultValues?: DefaultValues<T>);
 
