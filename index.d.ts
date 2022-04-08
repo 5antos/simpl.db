@@ -66,11 +66,11 @@ declare namespace SimplDB {
      */
     constructor(config?: DBConfig);
 
-    #addOrSubtract;
     #checkJSON;
     #decrypt;
     #encrypt;
     #fetchData;
+    #math;
     #validateBeforeDecrypt;
     #validateBeforeEncrypt;
     #validateEncryptionKey;
