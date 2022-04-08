@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const { isObject, isValidKey} = require('../lib/Utils');
+const { isObject, isValidKey } = require('../lib/Utils');
 
 
 test('isObject function', () => {

@@ -15,6 +15,14 @@ jest.mock('fs', () => {
 });
 
 
+test('Database#createCollection', () => {
+  const collections = db.collections.length;
+  const collection = db.createCollection('myCollection');
+
+  expect(collection.entries).toBe(0);
+  expect(collections).toBe(db.collections.length - 1);
+});
+
 test('Database#has', () => {
   expect(db.has('dessert')).toBe(false);
 
@@ -65,4 +73,19 @@ test('Database#subtract', () => {
   expect(db.subtract('items', 20)).toBe(-20);
   expect(db.subtract('items', 0)).toBe(-20);
   expect(() => db.subtract('items', Infinity)).toThrow();
+});
+
+test('Database#pull', () => {
+  db.push('array1', { name: 'John' });
+  db.push('array2', 3);
+
+  expect(db.pull('array1', { name: 'John' })).toEqual([]);
+  expect(db.pull('array2', 3)).toEqual([]);
+});
+
+test('Database#getCollection', () => {
+  const collection = db.createCollection('collection');
+
+  expect(db.getCollection('collection')).toEqual(collection);
+  expect(db.getCollection('inexistent')).toBe(null);
 });
