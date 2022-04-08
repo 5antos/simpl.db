@@ -129,6 +129,13 @@ declare namespace SimplDB {
     get(key: string, decrypt?: boolean): JSONData|never;
 
     /**
+     * Returns a collection.
+     * @param {string} name The name of the collection
+     * @returns {Collection<T>|null}
+     */
+    getCollection(name: string): Collection<T>|null|never;
+
+    /**
      * Checks if the provided key exists.
      * @param {string} key The key that will be checked
      * @returns {boolean}
