@@ -1,10 +1,20 @@
 node_modules
 package-lock.json
 index.ts
-.idea
+
+# Jest
 coverage
-.husky
-.vscode
 tests
-.eslintrc.json
 jest.config.js
+
+# Tests
+tests/temp
+
+# Husky
+.husky
+
+# ESLint
+.eslintrc.json
+
+# VS Code
+.vscode
