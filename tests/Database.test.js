@@ -2,7 +2,12 @@
 
 const Database = require('../lib/Database');
 const Collection = require('../lib/Collection');
-const db = new Database({ autoSave: false, encryptionKey: 'n2dE3cU2UjVfhHGhmTaatrzcpVF6JLbu' });
+const db = new Database({
+  autoSave: false,
+  encryptionKey: 'n2dE3cU2UjVfhHGhmTaatrzcpVF6JLbu',
+  dataFile: 'tests/temp/database.json',
+  collectionsFolder: 'tests/temp/collections'
+});
 
 
 jest.mock('fs', () => {
