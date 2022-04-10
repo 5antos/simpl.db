@@ -122,6 +122,8 @@ test('Collection#has', () => {
 
 
 test('Collection#random', () => {
+  expect(() => posts.random()).toThrow(/entries exceeds the total amount of entries/);
+
   posts.createBulk([
     { content: 'This is my first post!' },
     { content: 'This is my second post!' },
