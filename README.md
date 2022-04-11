@@ -73,7 +73,7 @@ Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John'
 <p>With TypeScript:</p>
 
 ```ts
-const { Database } = require('simpl.db');
+import { Database } from 'simpl.db';
 const db = new Database();
 
 type User = {
