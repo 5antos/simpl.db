@@ -31,8 +31,8 @@ Example Usage
 <h3>Database</h3>
 
 ```js
-const { Database } = require('simpl.db');
-const db = new Database();
+const SimplDB = require('simpl.db');
+const db = new SimplDB();
 
 db.set('money', 100);
 db.set('person.name', 'Peter');
