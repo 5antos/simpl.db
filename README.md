@@ -50,8 +50,8 @@ db.toJSON(); // { money: 100, person: { name: 'Peter' } }
 <h3>Collections</h3>
 
 ```js
-const { Database } = require('simpl.db');
-const db = new Database();
+const SimplDB = require('simpl.db');
+const db = new SimplDB();
 
 const Users = db.createCollection('users');
 
@@ -70,8 +70,8 @@ Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John'
 <p>With TypeScript:</p>
 
 ```ts
-const { Database } = require('simpl.db');
-const db = new Database();
+import SimplDB from 'simpl.db';
+const db = new SimplDB();
 
 type User = {
   name: string
