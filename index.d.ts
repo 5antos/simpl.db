@@ -159,6 +159,13 @@ declare namespace SimplDB {
     push(key: string, value: JSONData): JSONData|never;
 
     /**
+     * Renames a key.
+     * @param {string} key The target key
+     * @param {string} newName The new name for the key
+     */
+    rename(key: string, newName: string): JSONData|never;
+
+    /**
      * Writes the cached data into the JSON file.
      */
     save(): void|never;
@@ -186,6 +193,13 @@ declare namespace SimplDB {
      * @returns {Data}
      */
     toJSON(): Data;
+
+    /**
+     * Updates the provided key's value with the provided callback.
+     * @param {string} key The key to update
+     * @param {UpdateCallback<any>} callback 
+     */
+    update(key: string, callback: UpdateCallback): JSONData|never;
   }
   
   
