@@ -170,6 +170,31 @@ test('Database#push', () => {
 });
 
 
+test('Database#rename', () => {
+  db.set('people', ['Peter', 'Henry']);
+  
+  expect(db.rename('people', 'users')).toEqual({ users: ['Peter', 'Henry'] });
+
+  db.clear();
+  db.set('user', { id: 32171, items: ['sword'] });
+  
+  expect(db.rename('user.items', 'inventory')).toEqual({ id: 32171, inventory: ['sword'] });
+
+  db.clear();
+  db.set('posts', [{ title: 'My first post' }]);
+
+  expect(db.rename('posts', 'forum.posts')).toEqual({ forum: { posts: [{ title: 'My first post' }] }});
+  expect(db.rename('forum.posts', 'verifiedPosts')).toEqual({ verifiedPosts: [{ title: 'My first post' }] });
+  
+  expect(() => db.rename('some..key', 'value')).toThrow(/key is invalid/);
+  expect(() => db.rename('validKey', 'invalid..key')).toThrow(/provided name is invalid/);
+  expect(() => db.rename('people', undefined)).toThrow(/provided name is invalid/);
+  expect(() => db.rename('someUnexistingKey', 'value')).toThrow(/key does not exist/);
+
+  db.clear();
+});
+
+
 test('Database#save', () => {}); // Cannot be tested
 
 
