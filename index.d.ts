@@ -146,7 +146,7 @@ declare namespace SimplDB {
      * Removes all the elements with the same value as the provided value from an array based on the provided key.
      * @param {string} key The key of the target array
      * @param {JSONData} value The value to remove from the array
-     * @returns {JSONData|never}
+     * @returns {JSONData}
      */
     pull(key: string, value: JSONData): JSONData|never;
 
@@ -154,7 +154,7 @@ declare namespace SimplDB {
      * Pushes an element into an array based on the provided key.
      * @param {string} key The key of the target array
      * @param {JSONData} value The value to push into the array
-     * @returns {JSONData|never}
+     * @returns {JSONData}
      */
     push(key: string, value: JSONData): JSONData|never;
 
@@ -162,6 +162,7 @@ declare namespace SimplDB {
      * Renames a key.
      * @param {string} key The target key
      * @param {string} newName The new name for the key
+     * @returns {JSONData}
      */
     rename(key: string, newName: string): JSONData|never;
 
@@ -175,7 +176,7 @@ declare namespace SimplDB {
      * @param {string} key The target key
      * @param {JSONData} value The value to set
      * @param {boolean} [encrypt=false] Whether or not to encrypt the value before setting it
-     * @returns {JSONData|Data}
+     * @returns {JSONData}
      */
     set(key: string, value: JSONData, encrypt?: boolean): JSONData|Data|never;
 
@@ -197,7 +198,8 @@ declare namespace SimplDB {
     /**
      * Updates the provided key's value with the provided callback.
      * @param {string} key The key to update
-     * @param {UpdateCallback<any>} callback 
+     * @param {UpdateCallback<any>} callback The function to call to update the data
+     * @returns {JSONData}
      */
     update(key: string, callback: UpdateCallback): JSONData|never;
   }
