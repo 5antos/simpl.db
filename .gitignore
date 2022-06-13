@@ -5,4 +5,5 @@ index.ts
 coverage
 
 # Tests
-tests/temp
+tests/**
+!tests/*.test.js
