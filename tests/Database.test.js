@@ -235,3 +235,15 @@ test('Database#toJSON', () => {
 
   db.clear();
 });
+
+
+test('Database#update', () => {
+  db.set('player', { name: '5antos', money: 500 });
+
+  expect(db.update('player', d => d.money += 500)).toEqual({ name: '5antos', money: 1000 });
+  expect(db.update('player', d => delete d.money)).toEqual({ name: '5antos' });
+
+  expect(() => db.update('player', d => d.items.push(['sword', 'axe']))).toThrow(/callback function failed to update/);
+
+  db.clear();
+});
