@@ -129,11 +129,11 @@ declare namespace SimplDB {
     get(key: string, decrypt?: boolean): JSONData|never;
 
     /**
-     * Returns a collection.
+     * Returns the information and data from a collection.
      * @param {string} name The name of the collection
      * @returns {Collection<T>|null}
      */
-    getCollection(name: string): Collection<T>|null|never;
+    getCollection<T>(name: string): Collection<T>|null|never;
 
     /**
      * Checks if the provided key exists.
@@ -197,11 +197,11 @@ declare namespace SimplDB {
 
     /**
      * Updates the provided key's value with the provided callback.
-     * @param {string} key The key to update
-     * @param {UpdateCallback<any>} callback The function to call to update the data
+     * @param {string} key The target key
+     * @param {UpdateCallback<any>} updateCallback The function to call to update the data
      * @returns {JSONData}
      */
-    update(key: string, callback: UpdateCallback): JSONData|never;
+    update(key: string, updateCallback: UpdateCallback): JSONData|never;
   }
   
   
@@ -225,12 +225,12 @@ declare namespace SimplDB {
 
     /**
      * @constructor
+     * @param {string} name The name of the collection
      * @param {CollectionConfig} config The configuration to use in the collection
      * @param {boolean} [config.autoSave] Whether or not to write data into the JSON file everytime it is updated
      * @param {string} [config.folderPath] The path where the collection's data will be stored
      * @param {string} [config.tabSize] The size of the tab in the JSON file (indentation)
      * @param {string} [config.timestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every entry
-     * @param {string} name The name of the collection
      * @param {DefaultValues<T>} defaultValues Default values for omitted keys
      */
     private constructor(name: string, config: CollectionConfig, defaultValues?: DefaultValues<T>);
@@ -250,7 +250,7 @@ declare namespace SimplDB {
 
     /**
      * Creates and pushes more than one entry into the collection.
-     * @param {Partial<T>[]} entries Entries's data
+     * @param {Partial<T>[]} entries Entries' data
      * @returns {T[]}
      */
     createBulk(entries: Partial<T>): T[]|never;
