@@ -4,7 +4,6 @@ index.ts
 
 # Jest
 coverage
-tests
 jest.config.js
 
 # Tests
