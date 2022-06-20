@@ -243,6 +243,13 @@ test('Database#update', () => {
   expect(db.update('player', d => d.money += 500)).toEqual({ name: '5antos', money: 1000 });
   expect(db.update('player', d => delete d.money)).toEqual({ name: '5antos' });
 
+  expect(db.update('player.name', (name) => name.toUpperCase())).toEqual({ name: '5ANTOS' });
+  // or
+  expect(db.update('player.name', (name) => name = name.toLowerCase())).toEqual({ name: '5antos' });
+
+  expect(db.update('player.name', function(d) { return d.split(' ')[0]; })).toEqual({ name: '5antos' });
+  expect(db.update('player.name', (d) => d.toUpperCase())).toEqual({ name: '5ANTOS' });
+
   expect(() => db.update('player', d => d.items.push(['sword', 'axe']))).toThrow(/callback function failed to update/);
 
   db.clear();
