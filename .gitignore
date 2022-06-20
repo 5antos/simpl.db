@@ -1,4 +1,9 @@
 node_modules
-package-lock.json
 index.ts
-.idea
+
+# Jest
+coverage
+
+# Tests
+tests/**
+!tests/*.test.js

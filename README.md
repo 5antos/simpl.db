@@ -6,9 +6,6 @@
     <a href="https://www.npmjs.com/package/simpl.db"><img src="https://img.shields.io/badge/dependencies-0-brightgreen?color=3884FF" alt="Dependencies" /></a>
     <a href="https://packagequality.com/#?package=simpl.db"><img src="https://packagequality.com/shield/simpl.db.svg?color=3dd164" alt="Quality" /></a>
   </p>
-  <p>
-    <a href="https://www.buymeacoffee.com/5antos" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-  </p>
   <br><br>
 </div>
 
@@ -34,8 +31,8 @@ Example Usage
 <h3>Database</h3>
 
 ```js
-const { Database } = require('simpl.db');
-const db = new Database();
+const SimplDB = require('simpl.db');
+const db = new SimplDB();
 
 db.set('money', 100);
 db.set('person.name', 'Peter');
@@ -53,8 +50,8 @@ db.toJSON(); // { money: 100, person: { name: 'Peter' } }
 <h3>Collections</h3>
 
 ```js
-const { Database } = require('simpl.db');
-const db = new Database();
+const SimplDB = require('simpl.db');
+const db = new SimplDB();
 
 const Users = db.createCollection('users');
 
@@ -73,8 +70,8 @@ Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John'
 <p>With TypeScript:</p>
 
 ```ts
-import { Database } from 'simpl.db';
-const db = new Database();
+import SimplDB from 'simpl.db';
+const db = new SimplDB();
 
 type User = {
   name: string

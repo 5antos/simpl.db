@@ -1,6 +1,6 @@
 {
   "name": "simpl.db",
-  "version": "2.8.1",
+  "version": "2.9.0",
   "description": "A lightweight, 0 dependency, easy-to-use local database using JSON to store data",
   "license": "MIT",
   "author": "5antos#4876",
@@ -25,9 +25,18 @@
   },
   "homepage": "https://simpldb.js.org",
   "devDependencies": {
-    "@types/node": "^16.10.2"
+    "@types/node": "^16.10.2",
+    "eslint": "^8.12.0",
+    "husky": "^7.0.0",
+    "jest": "^27.5.1"
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint && jest",
+    "lint": "eslint .",
+    "fix": "eslint --fix .",
+    "prepare": "husky install"
   }
 }
