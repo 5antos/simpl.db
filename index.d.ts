@@ -214,7 +214,7 @@ declare namespace SimplDB {
     #defaultValues: DefaultValues<T>;
 
     /**
-     * The database where the collection is stored
+     * The database where the collection is stored.
      */
     public database: Database;
     
