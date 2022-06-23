@@ -7,9 +7,17 @@ const db = new Database({
   dataFile: 'tests/temp/database.json',
   collectionsFolder: 'tests/temp/collections'
 });
-const posts = db.createCollection('posts', {
+const Posts = db.createCollection('posts', {
   $id: 0,
   content: 'Wow, such empty content'
+});
+const Posts2 = db.createCollection('posts2', {
+  $id: 0,
+  content: 'Wow, such empty content'
+});
+const Authors = db.createCollection('authors', {
+  $id: 0,
+  name: 'Anonym Author'
 });
 
 
@@ -29,14 +37,14 @@ jest
 
   
 test('Collection#create', () => {
-  expect(posts.create({ content: 'This is my first post!' }))
+  expect(Posts.create({ content: 'This is my first post!' }))
     .toEqual({
       id: 0,
       content: 'This is my first post!',
       createdAt: now,
       updatedAt: now,
     });
-  expect(posts.create({ content: 'This is my second post!' }))
+  expect(Posts.create({ content: 'This is my second post!' }))
     .toEqual({
       id: 1,
       content: 'This is my second post!',
@@ -44,9 +52,31 @@ test('Collection#create', () => {
       updatedAt: now,
     });
 
-  expect(() => posts.create(null)).toThrow(/entry must be an object/);
+  expect(() => Posts.create(null)).toThrow(/entry must be an object/);
 
-  posts.remove();
+  Posts.remove();
+
+  ///////////////////////////////////////////////////////////////////////////////
+
+  const author = Authors.create({ name: 'José Saramago' });
+
+  expect(
+    Posts2.create({ content: 'This is my first post!', _author: { collection: 'authors', id: author.id } })
+  ).toEqual({
+    id: 0,
+    content: 'This is my first post!',
+    createdAt: now,
+    updatedAt: now,
+    author: {
+      id: author.id,
+      name: author.name,
+      createdAt: now,
+      updatedAt: now
+    }
+  });
+
+  Authors.remove();
+  Posts2.remove();
 });
 
 
@@ -56,15 +86,15 @@ test('Collection#createBulk', () => {
     { content: 'This is my second post!' }
   ];
 
-  expect(posts.createBulk(newPosts))
+  expect(Posts.createBulk(newPosts))
     .toEqual([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now, },
       { id: 1, content: 'This is my second post!', createdAt: now, updatedAt: now }
     ]);
 
-  expect(() => posts.createBulk(null)).toThrow(/parameter must be an array/);
+  expect(() => Posts.createBulk(null)).toThrow(/parameter must be an array/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
@@ -75,18 +105,18 @@ test('Collection#fetchOrCreate', () => {}); // Cannot be tested
 
 
 test('Collection#get', () => {
-  posts.create({ content: 'This is my first post!' });
+  Posts.create({ content: 'This is my first post!' });
 
-  expect(posts.get())
+  expect(Posts.get())
     .toEqual([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
     ]);
-  expect(posts.get(p => p.id === 0)).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
-  expect(posts.get(p => p.id === 1)).toBe(null);
+  expect(Posts.get(p => p.id === 0)).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
+  expect(Posts.get(p => p.id === 1)).toBe(null);
 
-  expect(() => posts.get(null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.get(null)).toThrow(/parameter must be a function/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
@@ -96,82 +126,82 @@ test('Collection#getOrCreate', () => {
     { content: 'This is my second post!' }
   ];
 
-  posts.create(newPosts[0]);
+  Posts.create(newPosts[0]);
 
-  expect(posts.getOrCreate(p => p.id === 0, newPosts[0])).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
-  expect(posts.getOrCreate(p => p.id === 1, newPosts[1])).toEqual({ id: 1, content: 'This is my second post!', createdAt: now, updatedAt: now });
+  expect(Posts.getOrCreate(p => p.id === 0, newPosts[0])).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
+  expect(Posts.getOrCreate(p => p.id === 1, newPosts[1])).toEqual({ id: 1, content: 'This is my second post!', createdAt: now, updatedAt: now });
 
-  expect(() => posts.getOrCreate(null)).toThrow(/parameter must be a function/);
-  expect(() => posts.getOrCreate(p => p.id === 99, null)).toThrow(/entry must be an object/);
+  expect(() => Posts.getOrCreate(null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.getOrCreate(p => p.id === 99, null)).toThrow(/entry must be an object/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
 test('Collection#has', () => {
-  posts.create({ content: 'This is my first post!' });
+  Posts.create({ content: 'This is my first post!' });
 
-  expect(posts.has(p => p.id === 0)).toBe(true);
-  expect(posts.has(p => p.id === 1)).toBe(false);
+  expect(Posts.has(p => p.id === 0)).toBe(true);
+  expect(Posts.has(p => p.id === 1)).toBe(false);
   
-  expect(() => posts.has()).toThrow(/parameter must be a function/);
-  expect(() => posts.has(null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.has()).toThrow(/parameter must be a function/);
+  expect(() => Posts.has(null)).toThrow(/parameter must be a function/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
 test('Collection#random', () => {
-  expect(() => posts.random()).toThrow(/entries exceeds the total amount of entries/);
+  expect(() => Posts.random()).toThrow(/entries exceeds the total amount of entries/);
 
-  posts.createBulk([
+  Posts.createBulk([
     { content: 'This is my first post!' },
     { content: 'This is my second post!' },
     { content: 'This is my third post!' },
     { content: 'This is my fourth post!' }
   ]);
 
-  expect(posts.random()).toBeInstanceOf(Object);
-  expect(posts.random(1)).toBeInstanceOf(Object);
-  expect(posts.random(2)).toBeInstanceOf(Array);
+  expect(Posts.random()).toBeInstanceOf(Object);
+  expect(Posts.random(1)).toBeInstanceOf(Object);
+  expect(Posts.random(2)).toBeInstanceOf(Array);
 
-  expect(() => posts.random(null)).toThrow(/entries must be a number bigger than 0/);
-  expect(() => posts.random(-5)).toThrow(/entries must be a number bigger than 0/);
-  expect(() => posts.random(99)).toThrow(/entries exceeds the total amount of entries/);
+  expect(() => Posts.random(null)).toThrow(/entries must be a number bigger than 0/);
+  expect(() => Posts.random(-5)).toThrow(/entries must be a number bigger than 0/);
+  expect(() => Posts.random(99)).toThrow(/entries exceeds the total amount of entries/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
 test('Collection#remove', () => {
-  posts.createBulk([
+  Posts.createBulk([
     { content: 'This is my first post!' },
     { content: 'This is my second post!' },
     { content: 'This is my third post!' },
     { content: 'This is my fourth post!' }
   ]);
 
-  expect(posts.entries).toBe(4);
+  expect(Posts.entries).toBe(4);
 
-  posts.remove();
+  Posts.remove();
 
-  expect(posts.entries).toBe(0);
+  expect(Posts.entries).toBe(0);
 });
 
 
 test('Collection#reset', () => {
-  posts.createBulk([
+  Posts.createBulk([
     { content: 'This is my first post!' },
     { content: 'This is my second post!' },
     { content: 'This is my third post!' },
     { content: 'This is my fourth post!' }
   ]);
 
-  expect(posts.reset(p => p.id === 0))
+  expect(Posts.reset(p => p.id === 0))
     .toEqual([
       { id: 0, content: 'Wow, such empty content', createdAt: now, updatedAt: now }
     ]);
-  expect(posts.reset())
+  expect(Posts.reset())
     .toEqual([
       { id: 0, content: 'Wow, such empty content', createdAt: now, updatedAt: now },
       { id: 1, content: 'Wow, such empty content', createdAt: now, updatedAt: now },
@@ -179,9 +209,9 @@ test('Collection#reset', () => {
       { id: 3, content: 'Wow, such empty content', createdAt: now, updatedAt: now }
     ]);
 
-  expect(() => posts.reset(null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.reset(null)).toThrow(/parameter must be a function/);
 
-  posts.remove();
+  Posts.remove();
 });
 
 
@@ -189,25 +219,25 @@ test('Collection#save', () => {}); // Cannot be tested
 
 
 test('Collection#update', () => {
-  posts.createBulk([
+  Posts.createBulk([
     { content: 'This is my first post!' },
     { content: 'This is my second post!' },
     { content: 'This is my third post!' }
   ]);
 
-  expect(posts.update(p => p.content += ' ✨', target => target.id === 0))
+  expect(Posts.update(p => p.content += ' ✨', target => target.id === 0))
     .toEqual([
       { id: 0, content: 'This is my first post! ✨', createdAt: now, updatedAt: now }
     ]);
-  expect(posts.update(p => p.content = 'Hey 👋🏼! ' + p.content))
+  expect(Posts.update(p => p.content = 'Hey 👋🏼! ' + p.content))
     .toEqual([
       { id: 0, content: 'Hey 👋🏼! This is my first post! ✨', createdAt: now, updatedAt: now },
       { id: 1, content: 'Hey 👋🏼! This is my second post!', createdAt: now, updatedAt: now },
       { id: 2, content: 'Hey 👋🏼! This is my third post!', createdAt: now, updatedAt: now }
     ]);
 
-  expect(() => posts.update(null)).toThrow(/parameter must be a function/);
-  expect(() => posts.update(p => p.content += '🙂', null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.update(null)).toThrow(/parameter must be a function/);
+  expect(() => Posts.update(p => p.content += '🙂', null)).toThrow(/parameter must be a function/);
 
-  posts.remove();
+  Posts.remove();
 });
