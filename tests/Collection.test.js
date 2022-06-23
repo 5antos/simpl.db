@@ -11,15 +11,14 @@ const Posts = db.createCollection('posts', {
   $id: 0,
   content: 'Wow, such empty content'
 });
-// const Posts2 = db.createCollection('posts2', {
-//   $id: 0,
-//   content: 'Wow, such empty content',
-//   authorId: null
-// });
-// const Authors = db.createCollection('authors', {
-//   $id: 0,
-//   name: 'Anonym Author'
-// });
+const Posts2 = db.createCollection('posts2', {
+  $id: 0,
+  content: 'Wow, such empty content'
+});
+const Authors = db.createCollection('authors', {
+  $id: 0,
+  name: 'Anonym Author'
+});
 
 
 const now = Date.now();
@@ -57,26 +56,27 @@ test('Collection#create', () => {
 
   Posts.remove();
 
-  /////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////
 
-  // const author = Authors.create({ name: 'José Saramago' });
+  const author = Authors.create({ name: 'José Saramago' });
 
-  // expect(
-  //   Posts2.create({ content: 'This is my #1 post!', _author: { collection: 'authors', id: author.id } })
-  // ).toEqual({
-  //   id: 0,
-  //   content: 'This is my #1 post!',
-  //   author: {
-  //     id: author.id,
-  //     name: 'José Saramago',
-  //     createdAt: now,
-  //     updatedAt: now,
-  //   },
-  //   createdAt: now,
-  //   updatedAt: now,
-  // });
+  expect(
+    Posts2.create({ content: 'This is my first post!', _author: { collection: 'authors', id: author.id } })
+  ).toEqual({
+    id: 0,
+    content: 'This is my first post!',
+    createdAt: now,
+    updatedAt: now,
+    author: {
+      id: author.id,
+      name: author.name,
+      createdAt: now,
+      updatedAt: now
+    }
+  });
 
-  // Posts2.remove();
+  Authors.remove();
+  Posts2.remove();
 });
 
 
