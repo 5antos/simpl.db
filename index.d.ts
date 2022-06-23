@@ -212,6 +212,11 @@ declare namespace SimplDB {
     #config: CollectionConfig;
     #data: T[];
     #defaultValues: DefaultValues<T>;
+
+    /**
+     * The database where the collection is stored
+     */
+    public database: Database;
     
     /**
      * The total amount of entries in the collection.
