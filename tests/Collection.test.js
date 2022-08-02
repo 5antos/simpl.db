@@ -78,10 +78,10 @@ test('Collection#get', () => {
   Posts.create({ content: 'This is my first post!' });
 
   expect(Posts.get())
-    .toEqual([
+    .toMatchObject([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
     ]);
-  expect(Posts.get(p => p.id === 0)).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
+  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
   expect(Posts.get(p => p.id === 1)).toBe(null);
 
   expect(() => Posts.get(null)).toThrow(/parameter must be a function/);
@@ -98,8 +98,8 @@ test('Collection#getOrCreate', () => {
 
   Posts.create(newPosts[0]);
 
-  expect(Posts.getOrCreate(p => p.id === 0, newPosts[0])).toEqual({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
-  expect(Posts.getOrCreate(p => p.id === 1, newPosts[1])).toEqual({ id: 1, content: 'This is my second post!', createdAt: now, updatedAt: now });
+  expect(Posts.getOrCreate(p => p.id === 0, newPosts[0])).toMatchObject({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
+  expect(Posts.getOrCreate(p => p.id === 1, newPosts[1])).toMatchObject({ id: 1, content: 'This is my second post!', createdAt: now, updatedAt: now });
 
   expect(() => Posts.getOrCreate(null)).toThrow(/parameter must be a function/);
   expect(() => Posts.getOrCreate(p => p.id === 99, null)).toThrow(/entry must be an object/);
@@ -208,6 +208,22 @@ test('Collection#update', () => {
 
   expect(() => Posts.update(null)).toThrow(/parameter must be a function/);
   expect(() => Posts.update(p => p.content += '🙂', null)).toThrow(/parameter must be a function/);
+
+  Posts.remove();
+});
+
+
+
+
+test('Data#save', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  const firstPost = Posts.get(p => p.id === 0);
+
+  firstPost.content = 'Post removed';
+  firstPost.save();
+
+  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'Post removed', createdAt: now, updatedAt: now });
 
   Posts.remove();
 });
