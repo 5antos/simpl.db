@@ -33,7 +33,7 @@ declare namespace SimplDB {
 
   export type DefaultValues<T> = Pick<T, Incrementable<Extended<T>>> | Partial<T>;
 
-  export type Filter<T extends any[]> = (args: T) => boolean;
+  export type Filter<T> = (args: T) => boolean;
 
   export type UpdateCallback<T> = (args: T) => void;
 
@@ -262,7 +262,7 @@ declare namespace SimplDB {
      * @param {Partial<T>[]} entries Entries' data
      * @returns {T[]}
      */
-    createBulk(entries: Partial<T>): T[]|never;
+    createBulk(entries: Partial<T>[]): T[]|never;
 
     /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
