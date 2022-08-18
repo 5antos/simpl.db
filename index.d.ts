@@ -61,8 +61,8 @@ declare namespace SimplDB {
     /**
      * @constructor
      * @param {DBConfig} config The configuration to be used in the database
-     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {boolean} [config.autoSave] Whether or not to write new data to the JSON file everytime it is updated
+     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {string} [config.collectionsFolder] The path to a folder where collections' data will be stored
      * @param {string} [config.collectionTimestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every collection entry
      * @param {string} [config.encryptionKey] The Encryption Key to be used when encrypting and decrypting data
