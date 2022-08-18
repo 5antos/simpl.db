@@ -27,9 +27,13 @@ declare namespace SimplDB {
     [Prop in keyof T as `$${Prop}`]: T[Prop]
   }
 
+  export type Modifiable<T> = T & {
+    save(): void;
+  }
+
   export type DefaultValues<T> = Pick<T, Incrementable<Extended<T>>> | Partial<T>;
 
-  export type Filter<T extends any[]> = (args: T) => boolean;
+  export type Filter<T> = (args: T) => boolean;
 
   export type UpdateCallback<T> = (args: T) => void;
 
@@ -57,8 +61,8 @@ declare namespace SimplDB {
     /**
      * @constructor
      * @param {DBConfig} config The configuration to be used in the database
-     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {boolean} [config.autoSave] Whether or not to write new data to the JSON file everytime it is updated
+     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {string} [config.collectionsFolder] The path to a folder where collections' data will be stored
      * @param {string} [config.collectionTimestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every collection entry
      * @param {string} [config.encryptionKey] The Encryption Key to be used when encrypting and decrypting data
@@ -258,7 +262,7 @@ declare namespace SimplDB {
      * @param {Partial<T>[]} entries Entries' data
      * @returns {T[]}
      */
-    createBulk(entries: Partial<T>): T[]|never;
+    createBulk(entries: Partial<T>[]): T[]|never;
 
     /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
@@ -266,7 +270,7 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T|T[]}
      */
-    fetch(filter?: Filter<T>): T|T[]|never;
+    fetch(filter?: Filter<T>): Modifiable<T>|Modifiable<T>[]|never;
 
     /**
      * Fetches the entries that match the provided filter directly from the JSON file.
@@ -275,7 +279,7 @@ declare namespace SimplDB {
      * @param {Data} data Entry's data
      * @returns {Data|Data[]}
      */
-    fetchOrCreate(filter: Filter<T>, data: T): T|T[]|never;
+    fetchOrCreate(filter: Filter<T>, data: T): Modifiable<T>|Modifiable<T>[]|never;
 
     /**
      * Returns the entries that match the provided filter.
@@ -283,7 +287,7 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T|T[]}
      */
-    get(filter?: Filter<T>): T|T[]|never;
+    get(filter?: Filter<T>): Modifiable<T>|Modifiable<T>[]|never;
 
     /**
      * Returns the entries that match the provided filter.
@@ -292,7 +296,7 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|T[]}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): T|T[]|never;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): Modifiable<T>|Modifiable<T>[]|never;
 
     /**
      * Checks if there is any entry matching the provided filter.
