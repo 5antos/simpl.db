@@ -2,6 +2,9 @@ node_modules
 package-lock.json
 index.ts
 
+# Development
+tsconfig.json
+
 # Jest
 coverage
 jest.config.js
