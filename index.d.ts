@@ -37,7 +37,7 @@ declare namespace SimplDB {
 
   export type DefaultValues<T> = Pick<T, Incrementable<Extended<T>>> | Partial<T>;
 
-  export type Filter<T extends any[]> = (args: T) => boolean;
+  export type Filter<T> = (args: T) => boolean;
 
   export type UpdateCallback<T> = (args: T) => void;
 
@@ -65,8 +65,8 @@ declare namespace SimplDB {
     /**
      * @constructor
      * @param {DBConfig} config The configuration to be used in the database
-     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {boolean} [config.autoSave] Whether or not to write new data to the JSON file everytime it is updated
+     * @param {string} [config.dataFile] The path of the JSON file (from the root of the project) to store data in
      * @param {string} [config.collectionsFolder] The path to a folder where collections' data will be stored
      * @param {string} [config.collectionTimestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every collection entry
      * @param {string} [config.encryptionKey] The Encryption Key to be used when encrypting and decrypting data
@@ -274,7 +274,7 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
-    fetchMany(filter?: Filter<T>): T[]|never;
+    fetch(filter?: Filter<T>): T|T[]|never;
 
     /**
      * Fetches an entry that matches the provided filter directly from the JSON file.
@@ -283,21 +283,14 @@ declare namespace SimplDB {
      * @param {Data} data Entry's data
      * @returns {T|null}
      */
-    fetchOrCreate(filter: Filter<T>, data: T): T|null|never;
-
-    /**
-     * Returns an entry that matches the provided filter.
-     * @param {Filter<T>} filter Filter to apply
-     * @returns {T|null}
-     */
-    get(filter: Filter<T>): T|null|never;
+    fetchOrCreate(filter: Filter<T>, data: T): T|T[]|never;
 
     /**
      * Returns the entries that match the provided filter.
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T}
      */
-    getMany(filter?: Filter<T>): T[]|never;
+    get(filter?: Filter<T>): T|T[]|never;
 
     /**
      * Returns an entry that matches the provided filter.
@@ -306,7 +299,7 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): T|T[]|never;
 
     /**
      * Checks if there is any entry matching the provided filter.

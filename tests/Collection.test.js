@@ -105,6 +105,25 @@ test('Collection#getMany', () => {
 });
 
 
+test('Collection#getMany', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  expect(Posts.getMany())
+    .toMatchObject([
+      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
+    ]);
+  expect(Posts.getMany(p => p.id === 0))
+    .toMatchObject([
+      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
+    ]);
+  expect(Posts.getMany(p => p.id === 1)).toEqual([]);
+
+  expect(() => Posts.getMany(null)).toThrow(/parameter must be a function/);
+
+  Posts.remove();
+});
+
+
 test('Collection#getOrCreate', () => {
   const newPosts = [
     { content: 'This is my first post!' },
@@ -227,6 +246,21 @@ test('Collection#update', () => {
   Posts.remove();
 });
 
+
+
+
+test('Data#save', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  const firstPost = Posts.get(p => p.id === 0);
+
+  firstPost.content = 'Post removed';
+  firstPost.save();
+
+  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'Post removed', createdAt: now, updatedAt: now });
+
+  Posts.remove();
+});
 
 
 
