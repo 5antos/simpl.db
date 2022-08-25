@@ -156,7 +156,7 @@ declare namespace SimplDB {
      * @param {JSONData} value The value to remove from the array
      * @returns {T}
      */
-    pull<T extends JSONData>(key: string, value: JSONData): T|never;
+    pull<T extends JSONData>(key: string, value: T): T|never;
 
     /**
      * Pushes an element into an array based on the provided key.
@@ -164,7 +164,7 @@ declare namespace SimplDB {
      * @param {JSONData} value The value to push into the array
      * @returns {T}
      */
-    push<T extends JSONData>(key: string, value: JSONData): T|never;
+    push<T extends JSONData>(key: string, value: T): T|never;
 
     /**
      * Renames a key.
@@ -209,7 +209,7 @@ declare namespace SimplDB {
      * @param {UpdateCallback<any>} updateCallback The function to call to update the data
      * @returns {T}
      */
-    update<T extends JSONData>(key: string, updateCallback: UpdateCallback): T|never;
+    update<T extends JSONData>(key: string, updateCallback: UpdateCallback<T>): T|never;
   }
   
   
@@ -240,10 +240,10 @@ declare namespace SimplDB {
      * @constructor
      * @param {string} name The name of the collection
      * @param {CollectionConfig} config The configuration to use in the collection
-     * @param {boolean} [config.autoSave] Whether or not to write data into the JSON file everytime it is updated
-     * @param {string} [config.folderPath] The path where the collection's data will be stored
-     * @param {string} [config.tabSize] The size of the tab in the JSON file (indentation)
-     * @param {string} [config.timestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every entry
+     * @param {boolean} config.autoSave Whether or not to write data into the JSON file everytime it is updated
+     * @param {string} config.folderPath The path where the collection's data will be stored
+     * @param {string} config.tabSize The size of the tab in the JSON file (indentation)
+     * @param {string} config.timestamps Whether or not to automatically add the attributes createdAt and updatedAt to every entry
      * @param {DefaultValues<T>} defaultValues Default values for omitted keys
      */
     private constructor(name: string, config: CollectionConfig, defaultValues?: DefaultValues<T>);
@@ -269,28 +269,53 @@ declare namespace SimplDB {
     createBulk(entries: Partial<T>[]): T[]|never;
 
     /**
+     * Fetches the entries directly from the JSON file and returns the one that matches the provided filter.
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T|null}
+     */
+    fetch(filter: Filter<T>): T|null|never;
+
+    /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
-     * Fetches and returns all the entries from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply
+     * @param {Filter<T>} filter Filter to apply
      * @returns {T[]}
      */
-    fetch(filter?: Filter<T>): T|T[]|never;
+    fetchMany(filter: Filter<T>): T[]|never;
+
+    /**
+     * Fetches all the entries from the collection directly from the JSON file.
+     * @returns {T[]}
+     */
+    fetchAll(): T[]|never;
 
     /**
      * Fetches an entry that matches the provided filter directly from the JSON file.
      * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Function} filter Filter to apply
-     * @param {Data} data Entry's data
+     * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    fetchOrCreate(filter: Filter<T>, data: T): T|T[]|never;
+    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
+
+    /**
+     * Returns an entry that matches the provided filter.
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T|null}
+     */
+    get(filter: Filter<T>): T|null|never;
 
     /**
      * Returns the entries that match the provided filter.
-     * @param {Filter<T>} [filter] Filter to apply
-     * @returns {T}
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T[]}
      */
-    get(filter?: Filter<T>): T|T[]|never;
+    getMany(filter: Filter<T>): T[]|never;
+
+    /**
+     * Returns all the entries from the collection.
+     * @returns {T[]}
+     */
+    getAll(): T[]|never;
 
     /**
      * Returns an entry that matches the provided filter.
@@ -299,7 +324,7 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): T|T[]|never;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
 
     /**
      * Checks if there is any entry matching the provided filter.
