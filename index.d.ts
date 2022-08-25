@@ -90,9 +90,9 @@ declare namespace SimplDB {
      * If no existing number, the provided value will be added to 0 (zero).
      * @param {string} key The key that will have its value incremented
      * @param {number} value The value to increment
-     * @returns {number|T}
+     * @returns {T}
      */
-    add<T>(key: string, value: number): number|T|never;
+    add<T>(key: string, value: number): T|never;
 
     /**
      * Clears the database.
@@ -193,9 +193,9 @@ declare namespace SimplDB {
      * If no existing number, the provided value will be subtracted from 0 (zero).
      * @param {string} key The key that will have its value decremented
      * @param {number} value The value to decrement
-     * @returns {number|T}
+     * @returns {T}
      */
-    subtract<T extends JSONData>(key: string, value: number): number|T|never;
+    subtract<T extends JSONData>(key: string, value: number): T|never;
 
     /**
      * Parses and returns all the data from the database as an object.
