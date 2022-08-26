@@ -274,6 +274,12 @@ declare namespace SimplDB {
      * @returns {T|null}
      */
     fetch(filter: Filter<T>): T|null|never;
+    
+    /**
+     * Fetches all the entries from the collection directly from the JSON file.
+     * @returns {T[]}
+     */
+    fetchAll(): T[]|never;
 
     /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
@@ -281,12 +287,6 @@ declare namespace SimplDB {
      * @returns {T[]}
      */
     fetchMany(filter: Filter<T>): T[]|never;
-
-    /**
-     * Fetches all the entries from the collection directly from the JSON file.
-     * @returns {T[]}
-     */
-    fetchAll(): T[]|never;
 
     /**
      * Fetches an entry that matches the provided filter directly from the JSON file.
@@ -303,6 +303,12 @@ declare namespace SimplDB {
      * @returns {T|null}
      */
     get(filter: Filter<T>): T|null|never;
+    
+    /**
+     * Returns all the entries from the collection.
+     * @returns {T[]}
+     */
+    getAll(): T[]|never;
 
     /**
      * Returns the entries that match the provided filter.
@@ -310,12 +316,6 @@ declare namespace SimplDB {
      * @returns {T[]}
      */
     getMany(filter: Filter<T>): T[]|never;
-
-    /**
-     * Returns all the entries from the collection.
-     * @returns {T[]}
-     */
-    getAll(): T[]|never;
 
     /**
      * Returns an entry that matches the provided filter.
