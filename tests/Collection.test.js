@@ -71,6 +71,12 @@ test('Collection#createBulk', () => {
 test('Collection#fetch', () => {}); // Cannot be tested
 
 
+test('Collection#fetchMany', () => {}); // Cannot be tested
+
+
+test('Collection#fetchAll', () => {}); // Cannot be tested
+
+
 test('Collection#fetchOrCreate', () => {}); // Cannot be tested
 
 
@@ -89,7 +95,7 @@ test('Collection#get', () => {
 test('Collection#getMany', () => {
   Posts.create({ content: 'This is my first post!' });
 
-  expect(Posts.getMany())
+  expect(Posts.getMany(p => p.id < 5))
     .toMatchObject([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
     ]);
@@ -105,22 +111,17 @@ test('Collection#getMany', () => {
 });
 
 
-test('Collection#getMany', () => {
+test('Collection#getAll', () => {
   Posts.create({ content: 'This is my first post!' });
 
-  expect(Posts.getMany())
+  expect(Posts.getAll())
     .toMatchObject([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
     ]);
-  expect(Posts.getMany(p => p.id === 0))
-    .toMatchObject([
-      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
-    ]);
-  expect(Posts.getMany(p => p.id === 1)).toEqual([]);
-
-  expect(() => Posts.getMany(null)).toThrow(/parameter must be a function/);
 
   Posts.remove();
+
+  expect(Posts.getAll()).toEqual([]);
 });
 
 
