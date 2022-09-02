@@ -1,6 +1,9 @@
 node_modules
 index.ts
 
+# Development
+tsconfig.json
+
 # Jest
 coverage
 

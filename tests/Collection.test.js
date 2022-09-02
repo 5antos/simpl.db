@@ -71,22 +71,57 @@ test('Collection#createBulk', () => {
 test('Collection#fetch', () => {}); // Cannot be tested
 
 
+test('Collection#fetchMany', () => {}); // Cannot be tested
+
+
+test('Collection#fetchAll', () => {}); // Cannot be tested
+
+
 test('Collection#fetchOrCreate', () => {}); // Cannot be tested
 
 
 test('Collection#get', () => {
   Posts.create({ content: 'This is my first post!' });
 
-  expect(Posts.get())
-    .toMatchObject([
-      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
-    ]);
   expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now });
   expect(Posts.get(p => p.id === 1)).toBe(null);
 
   expect(() => Posts.get(null)).toThrow(/parameter must be a function/);
 
   Posts.remove();
+});
+
+
+test('Collection#getMany', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  expect(Posts.getMany(p => p.id < 5))
+    .toMatchObject([
+      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
+    ]);
+  expect(Posts.getMany(p => p.id === 0))
+    .toMatchObject([
+      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
+    ]);
+  expect(Posts.getMany(p => p.id === 1)).toEqual([]);
+
+  expect(() => Posts.getMany(null)).toThrow(/parameter must be a function/);
+
+  Posts.remove();
+});
+
+
+test('Collection#getAll', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  expect(Posts.getAll())
+    .toMatchObject([
+      { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
+    ]);
+
+  Posts.remove();
+
+  expect(Posts.getAll()).toEqual([]);
 });
 
 
@@ -212,6 +247,21 @@ test('Collection#update', () => {
   Posts.remove();
 });
 
+
+
+
+test('Data#save', () => {
+  Posts.create({ content: 'This is my first post!' });
+
+  const firstPost = Posts.get(p => p.id === 0);
+
+  firstPost.content = 'Post removed';
+  firstPost.save();
+
+  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'Post removed', createdAt: now, updatedAt: now });
+
+  Posts.remove();
+});
 
 
 

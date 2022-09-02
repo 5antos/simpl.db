@@ -103,7 +103,6 @@ Users.update(
 );
 // or (simpl.db@2.11.0+)
 const user = <Modifiable<User>> Users.get(target => target.name === 'Peter');
-
 user.age = 20;
 user.save();
 

@@ -27,6 +27,10 @@ declare namespace SimplDB {
     [Prop in keyof T as `$${Prop}`]: T[Prop]
   }
 
+  export type Readable<T> = {
+    readonly [Prop in keyof T]: T[Prop]
+  };
+
   export type Modifiable<T> = T & {
     save(): void;
   }
@@ -86,9 +90,9 @@ declare namespace SimplDB {
      * If no existing number, the provided value will be added to 0 (zero).
      * @param {string} key The key that will have its value incremented
      * @param {number} value The value to increment
-     * @returns {number|Data}
+     * @returns {T}
      */
-    add(key: string, value: number): number|Data|never;
+    add<T>(key: string, value: number): T|never;
 
     /**
      * Clears the database.
@@ -99,9 +103,9 @@ declare namespace SimplDB {
      * Creates a new collection.
      * @param {string} name The name for the collection
      * @param {DefaultValues<T>} [defaultValues={}] Default values for omitted keys
-     * @returns {Collection<T>}
+     * @returns {Collection<Readable<T>>}
      */
-    createCollection<T>(name: string, defaultValues?: DefaultValues<T>): Collection<T>|never;
+    createCollection<T>(name: string, defaultValues?: DefaultValues<T>): Collection<Readable<T>>|never;
 
     /**
      * Deletes a key.
@@ -120,9 +124,9 @@ declare namespace SimplDB {
     /**
      * Returns the value of the provided key directly from the JSON file.
      * @param {string} key The key to get the value from
-     * @returns {JSONData}
+     * @returns {T}
      */
-    fetch(key: string): JSONData|never;
+    fetch<T extends JSONData>(key: string): T|never;
 
     /**
      * Returns the value of the provided key.
@@ -130,14 +134,14 @@ declare namespace SimplDB {
      * @param {boolean} [decrypt=false] Whether or not to decrypt the returned value
      * @returns {JSONData}
      */
-    get(key: string, decrypt?: boolean): JSONData|never;
+    get<T extends JSONData>(key: string, decrypt?: boolean): T|never;
 
     /**
      * Returns the information and data from a collection.
      * @param {string} name The name of the collection
-     * @returns {Collection<T>|null}
+     * @returns {Collection<Readable<T>>|null}
      */
-    getCollection<T>(name: string): Collection<T>|null|never;
+    getCollection<T>(name: string): Collection<Readable<T>>|null|never;
 
     /**
      * Checks if the provided key exists.
@@ -150,25 +154,25 @@ declare namespace SimplDB {
      * Removes all the elements with the same value as the provided value from an array based on the provided key.
      * @param {string} key The key of the target array
      * @param {JSONData} value The value to remove from the array
-     * @returns {JSONData}
+     * @returns {T}
      */
-    pull(key: string, value: JSONData): JSONData|never;
+    pull<T extends JSONData>(key: string, value: T): T|never;
 
     /**
      * Pushes an element into an array based on the provided key.
      * @param {string} key The key of the target array
      * @param {JSONData} value The value to push into the array
-     * @returns {JSONData}
+     * @returns {T}
      */
-    push(key: string, value: JSONData): JSONData|never;
+    push<T extends JSONData>(key: string, value: T): T|never;
 
     /**
      * Renames a key.
      * @param {string} key The target key
      * @param {string} newName The new name for the key
-     * @returns {JSONData}
+     * @returns {T}
      */
-    rename(key: string, newName: string): JSONData|never;
+    rename<T extends JSONData>(key: string, newName: string): T|never;
 
     /**
      * Writes the cached data into the JSON file.
@@ -180,18 +184,18 @@ declare namespace SimplDB {
      * @param {string} key The target key
      * @param {JSONData} value The value to set
      * @param {boolean} [encrypt=false] Whether or not to encrypt the value before setting it
-     * @returns {JSONData}
+     * @returns {T}
      */
-    set(key: string, value: JSONData, encrypt?: boolean): JSONData|Data|never;
+    set<T extends JSONData>(key: string, value: JSONData, encrypt?: boolean): T|Data|never;
 
     /**
      * Subtracts the provided value from the value of the provided key.
      * If no existing number, the provided value will be subtracted from 0 (zero).
      * @param {string} key The key that will have its value decremented
      * @param {number} value The value to decrement
-     * @returns {number|JSONData}
+     * @returns {T}
      */
-    subtract(key: string, value: number): number|JSONData|never;
+    subtract<T extends JSONData>(key: string, value: number): T|never;
 
     /**
      * Parses and returns all the data from the database as an object.
@@ -203,9 +207,9 @@ declare namespace SimplDB {
      * Updates the provided key's value with the provided callback.
      * @param {string} key The target key
      * @param {UpdateCallback<any>} updateCallback The function to call to update the data
-     * @returns {JSONData}
+     * @returns {T}
      */
-    update(key: string, updateCallback: UpdateCallback): JSONData|never;
+    update<T extends JSONData>(key: string, updateCallback: UpdateCallback<T>): T|never;
   }
   
   
@@ -236,10 +240,10 @@ declare namespace SimplDB {
      * @constructor
      * @param {string} name The name of the collection
      * @param {CollectionConfig} config The configuration to use in the collection
-     * @param {boolean} [config.autoSave] Whether or not to write data into the JSON file everytime it is updated
-     * @param {string} [config.folderPath] The path where the collection's data will be stored
-     * @param {string} [config.tabSize] The size of the tab in the JSON file (indentation)
-     * @param {string} [config.timestamps] Whether or not to automatically add the attributes createdAt and updatedAt to every entry
+     * @param {boolean} config.autoSave Whether or not to write data into the JSON file everytime it is updated
+     * @param {string} config.folderPath The path where the collection's data will be stored
+     * @param {string} config.tabSize The size of the tab in the JSON file (indentation)
+     * @param {string} config.timestamps Whether or not to automatically add the attributes createdAt and updatedAt to every entry
      * @param {DefaultValues<T>} defaultValues Default values for omitted keys
      */
     private constructor(name: string, config: CollectionConfig, defaultValues?: DefaultValues<T>);
@@ -265,38 +269,62 @@ declare namespace SimplDB {
     createBulk(entries: Partial<T>[]): T[]|never;
 
     /**
-     * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
-     * Fetches and returns all the entries from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply
-     * @returns {T|T[]}
+     * Fetches the entries directly from the JSON file and returns the first one that matches the provided filter.
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T|null}
      */
-    fetch(filter?: Filter<T>): Modifiable<T>|Modifiable<T>[]|never;
+    fetch(filter: Filter<T>): T|null|never;
+    
+    /**
+     * Fetches all the entries from the collection directly from the JSON file.
+     * @returns {T[]}
+     */
+    fetchAll(): T[]|never;
 
     /**
-     * Fetches the entries that match the provided filter directly from the JSON file.
+     * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T[]}
+     */
+    fetchMany(filter: Filter<T>): T[]|never;
+
+    /**
+     * Fetches the first entry that matches the provided filter directly from the JSON file.
      * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Function} filter Filter to apply
-     * @param {Data} data Entry's data
-     * @returns {Data|Data[]}
+     * @param {Partial<T>} data Entry's data
+     * @returns {T|null}
      */
-    fetchOrCreate(filter: Filter<T>, data: T): Modifiable<T>|Modifiable<T>[]|never;
+    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
+
+    /**
+     * Returns the first entry that matches the provided filter.
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T|null}
+     */
+    get(filter: Filter<T>): T|null|never;
+    
+    /**
+     * Returns all the entries from the collection.
+     * @returns {T[]}
+     */
+    getAll(): T[]|never;
 
     /**
      * Returns the entries that match the provided filter.
-     * Returns all the entries from the collection if no filter is provided.
-     * @param {Filter<T>} [filter] Filter to apply
-     * @returns {T|T[]}
+     * @param {Filter<T>} filter Filter to apply
+     * @returns {T[]}
      */
-    get(filter?: Filter<T>): Modifiable<T>|Modifiable<T>[]|never;
+    getMany(filter: Filter<T>): T[]|never;
 
     /**
-     * Returns the entries that match the provided filter.
-     * If no data is found, creates and pushes a new one with the provided data into the collection.
+     * Returns the first entry that matches the provided filter.
+     * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Filter<T>} filter Filter to apply
      * @param {Partial<T>} data Entry's data
-     * @returns {T|T[]}
+     * @returns {T|null}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): Modifiable<T>|Modifiable<T>[]|never;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
 
     /**
      * Checks if there is any entry matching the provided filter.
