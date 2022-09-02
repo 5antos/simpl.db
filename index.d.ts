@@ -269,7 +269,7 @@ declare namespace SimplDB {
     createBulk(entries: Partial<T>[]): T[]|never;
 
     /**
-     * Fetches the entries directly from the JSON file and returns the one that matches the provided filter.
+     * Fetches the entries directly from the JSON file and returns the first one that matches the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T|null}
      */
@@ -289,7 +289,7 @@ declare namespace SimplDB {
     fetchMany(filter: Filter<T>): T[]|never;
 
     /**
-     * Fetches an entry that matches the provided filter directly from the JSON file.
+     * Fetches the first entry that matches the provided filter directly from the JSON file.
      * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Function} filter Filter to apply
      * @param {Partial<T>} data Entry's data
@@ -298,7 +298,7 @@ declare namespace SimplDB {
     fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
 
     /**
-     * Returns an entry that matches the provided filter.
+     * Returns the first entry that matches the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T|null}
      */
@@ -318,7 +318,7 @@ declare namespace SimplDB {
     getMany(filter: Filter<T>): T[]|never;
 
     /**
-     * Returns an entry that matches the provided filter.
+     * Returns the first entry that matches the provided filter.
      * If no entry is found, creates and pushes a new one with the provided data into the collection.
      * @param {Filter<T>} filter Filter to apply
      * @param {Partial<T>} data Entry's data
