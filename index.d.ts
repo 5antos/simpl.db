@@ -29,7 +29,11 @@ declare namespace SimplDB {
 
   export type Readable<T> = {
     readonly [Prop in keyof T]: T[Prop]
-  };
+  }
+
+  export type Writable<T> = {
+    -readonly [Prop in keyof T]: T[Prop]
+  }
 
   export type Modifiable<T> = T & {
     save(): void;
@@ -364,11 +368,11 @@ declare namespace SimplDB {
     /**
      * Updates the entries that match the provided filter with the provided callback.
      * Updates all the entries if no filter is provided.
-     * @param {UpdateCallback<T>} updateCallback Function to run for each entry returned by the filter
+     * @param {UpdateCallback<Writable<T>>} updateCallback Function to run for each entry returned by the filter
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
-    update(updateCallback: UpdateCallback<T>, filter?: Filter<T>): T[]|never;
+    update(updateCallback: UpdateCallback<Writable<T>>, filter?: Filter<T>): T[]|never;
   }
 }
 
