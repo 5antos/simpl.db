@@ -76,7 +76,7 @@ user.save();
 
 
 Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 20 }
-Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
+Users.getMany(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
 ```
 
 <p>With TypeScript:</p>
@@ -108,7 +108,7 @@ user.save();
 
 
 Users.get(user => user.name === 'Peter'); // { name: 'Peter', age: 20 }
-Users.get(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
+Users.getMany(user => user.age > 18); // [{ name: 'Peter', age: 20 }, { name: 'John', age: 19 }]
 ```
 
 Contributing
