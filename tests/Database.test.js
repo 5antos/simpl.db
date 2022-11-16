@@ -88,6 +88,42 @@ test('Database#deleteCollection', () => {
 });
 
 
+test('Database#extend', () => {
+  /*
+    Note:
+      When using the extend method, you can access the target collection's methods with the "this" keyword,
+      but only if you use the function keyword (i.e. arrow functions won't work).
+  */
+
+  const extendedDb = db.extend({
+    // Add new methods
+    chunk(key, count) {
+      const array = this.get(key);
+
+      const newArr = [];
+
+      for (var i = 0; i < array.length; i+=count)
+        newArr[i/count] = array.slice(i, i+count);
+      
+      return newArr;
+    },
+
+    // Overwrite existing methods
+    delete() {
+      return 'This is actually not deleting anything. It\'s just for the sake of testing. 🫠';
+    }
+  });
+
+  extendedDb.set('someArray', [1,2,3,4,5]);
+
+  expect(extendedDb.chunk('someArray', 2)).toEqual([[1,2], [3,4], [5]]);
+  expect(extendedDb.delete('someKey')).not.toBe(db.delete('SomeKey'));
+
+  extendedDb.clear();
+  db.clear();
+});
+
+
 test('Database#fetch', () => {}); // Cannot be tested
 
 

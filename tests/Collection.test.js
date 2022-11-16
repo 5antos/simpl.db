@@ -68,6 +68,51 @@ test('Collection#createBulk', () => {
 });
 
 
+test('Collection#extend', () => {
+  /*
+    Note:
+      When using the extend method, you can access the target collection's methods with the "this" keyword,
+      but only if you use the function keyword (i.e. arrow functions won't work).
+  */
+
+  const ExtendedPosts = Posts.extend({
+    // Add new methods
+    chunk(count) {
+      const data = this.getAll();
+
+      const newArr = [];
+
+      for (var i = 0; i < data.length; i+=count)
+        newArr[i/count] = data.slice(i, i+count);
+      
+      return newArr;
+    },
+
+    // Overwrite existing methods
+    create() {
+      return 'This is actually not creating anything. It\'s just for the sake of testing. 🫠';
+    }
+  });
+
+  ExtendedPosts.createBulk([
+    { content: 'Some content #1' },
+    { content: 'Some content #2' },
+    { content: 'Some content #3' },
+    { content: 'Some content #4' }
+  ]);
+
+  expect(ExtendedPosts.chunk(2))
+    .toMatchObject([
+      [ { /* ... */ }, { /* ... */ } ],
+      [ { /* ... */ }, { /* ... */ } ]
+    ]);
+  expect(ExtendedPosts.create({ content: 'Some content #5' })).not.toEqual(Posts.create({ content: 'Some content #6' }));
+
+  ExtendedPosts.remove();
+  Posts.remove();
+});
+
+
 test('Collection#fetch', () => {}); // Cannot be tested
 
 
@@ -103,7 +148,7 @@ test('Collection#getMany', () => {
     .toMatchObject([
       { id: 0, content: 'This is my first post!', createdAt: now, updatedAt: now }
     ]);
-  expect(Posts.getMany(p => p.id === 1)).toEqual([]);
+  expect(Posts.getMany(p => p.id === 1)).toMatchObject([]);
 
   expect(() => Posts.getMany(null)).toThrow(/parameter must be a function/);
 
@@ -121,7 +166,7 @@ test('Collection#getAll', () => {
 
   Posts.remove();
 
-  expect(Posts.getAll()).toEqual([]);
+  expect(Posts.getAll()).toMatchObject([]);
 });
 
 
