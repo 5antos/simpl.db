@@ -96,7 +96,7 @@ declare namespace SimplDB {
      * @param {number} value The value to increment
      * @returns {T}
      */
-    add<T>(key: string, value: number): T|never;
+    add<T>(key: string, value: number): T;
 
     /**
      * Clears the database.
@@ -109,28 +109,34 @@ declare namespace SimplDB {
      * @param {DefaultValues<T>} [defaultValues={}] Default values for omitted keys
      * @returns {Collection<Readable<T>>}
      */
-    createCollection<T>(name: string, defaultValues?: DefaultValues<T>): Collection<Readable<T>>|never;
+    createCollection<T>(name: string, defaultValues?: DefaultValues<T>): Collection<Readable<T>>;
 
     /**
      * Deletes a key.
      * @param {string} key The key to delete
      * @returns {boolean}
      */
-    delete(key: string): boolean|never;
+    delete(key: string): boolean;
 
     /**
      * Deletes a collection.
      * @param {string} name The name of the collection
      * @returns {boolean}
      */
-    deleteCollection(name: string): boolean|never;
+    deleteCollection(name: string): boolean;
+
+    /**
+     * Extends this class with the provided methods.
+     * @param extensions An object with the methods to extend this class with
+     */
+    extend<T extends Record<string, (this: this, ...args: never[]) => unknown>>(extensions: T): this & T;
 
     /**
      * Returns the value of the provided key directly from the JSON file.
      * @param {string} key The key to get the value from
      * @returns {T}
      */
-    fetch<T extends JSONData>(key: string): T|never;
+    fetch<T extends JSONData>(key: string): T;
 
     /**
      * Returns the value of the provided key.
@@ -138,21 +144,21 @@ declare namespace SimplDB {
      * @param {boolean} [decrypt=false] Whether or not to decrypt the returned value
      * @returns {JSONData}
      */
-    get<T extends JSONData>(key: string, decrypt?: boolean): T|never;
+    get<T extends JSONData>(key: string, decrypt?: boolean): T;
 
     /**
      * Returns the information and data from a collection.
      * @param {string} name The name of the collection
      * @returns {Collection<Readable<T>>|null}
      */
-    getCollection<T>(name: string): Collection<Readable<T>>|null|never;
+    getCollection<T>(name: string): Collection<Readable<T>>|null;
 
     /**
      * Checks if the provided key exists.
      * @param {string} key The key that will be checked
      * @returns {boolean}
      */
-    has(key: string): boolean|never;
+    has(key: string): boolean;
 
     /**
      * Removes all the elements with the same value as the provided value from an array based on the provided key.
@@ -160,7 +166,7 @@ declare namespace SimplDB {
      * @param {JSONData} value The value to remove from the array
      * @returns {T}
      */
-    pull<T extends JSONData>(key: string, value: T): T|never;
+    pull<T extends JSONData>(key: string, value: T): T;
 
     /**
      * Pushes an element into an array based on the provided key.
@@ -168,7 +174,7 @@ declare namespace SimplDB {
      * @param {JSONData} value The value to push into the array
      * @returns {T}
      */
-    push<T extends JSONData>(key: string, value: T): T|never;
+    push<T extends JSONData>(key: string, value: T): T;
 
     /**
      * Renames a key.
@@ -176,12 +182,12 @@ declare namespace SimplDB {
      * @param {string} newName The new name for the key
      * @returns {T}
      */
-    rename<T extends JSONData>(key: string, newName: string): T|never;
+    rename<T extends JSONData>(key: string, newName: string): T;
 
     /**
      * Writes the cached data into the JSON file.
      */
-    save(): void|never;
+    save(): void;
 
     /**
      * Sets a new value to the value of the provided key.
@@ -190,7 +196,7 @@ declare namespace SimplDB {
      * @param {boolean} [encrypt=false] Whether or not to encrypt the value before setting it
      * @returns {T}
      */
-    set<T extends JSONData>(key: string, value: JSONData, encrypt?: boolean): T|Data|never;
+    set<T extends JSONData>(key: string, value: JSONData, encrypt?: boolean): T|Data;
 
     /**
      * Subtracts the provided value from the value of the provided key.
@@ -199,7 +205,7 @@ declare namespace SimplDB {
      * @param {number} value The value to decrement
      * @returns {T}
      */
-    subtract<T extends JSONData>(key: string, value: number): T|never;
+    subtract<T extends JSONData>(key: string, value: number): T;
 
     /**
      * Parses and returns all the data from the database as an object.
@@ -213,7 +219,7 @@ declare namespace SimplDB {
      * @param {UpdateCallback<any>} updateCallback The function to call to update the data
      * @returns {T}
      */
-    update<T extends JSONData>(key: string, updateCallback: UpdateCallback<T>): T|never;
+    update<T extends JSONData>(key: string, updateCallback: UpdateCallback<T>): T;
   }
   
   
@@ -263,34 +269,40 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T}
      */
-    create(data: Partial<T>): T|never;
+    create(data: Partial<T>): T;
 
     /**
      * Creates and pushes more than one entry into the collection.
      * @param {Partial<T>[]} entries Entries' data
      * @returns {T[]}
      */
-    createBulk(entries: Partial<T>[]): T[]|never;
+    createBulk(entries: Partial<T>[]): T[];
+
+    /**
+     * Extends this class with the provided methods.
+     * @param extensions An object with the methods to extend this class with
+     */
+    extend<T extends Record<string, (this: this, ...args: never[]) => unknown>>(extensions: T): this & T;
 
     /**
      * Fetches the entries directly from the JSON file and returns the first one that matches the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T|null}
      */
-    fetch(filter: Filter<T>): T|null|never;
+    fetch(filter: Filter<T>): T|null;
     
     /**
      * Fetches all the entries from the collection directly from the JSON file.
      * @returns {T[]}
      */
-    fetchAll(): T[]|never;
+    fetchAll(): T[];
 
     /**
      * Fetches the entries directly from the JSON file and returns the ones that match the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T[]}
      */
-    fetchMany(filter: Filter<T>): T[]|never;
+    fetchMany(filter: Filter<T>): T[];
 
     /**
      * Fetches the first entry that matches the provided filter directly from the JSON file.
@@ -299,27 +311,27 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
+    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null;
 
     /**
      * Returns the first entry that matches the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T|null}
      */
-    get(filter: Filter<T>): T|null|never;
+    get(filter: Filter<T>): T|null;
     
     /**
      * Returns all the entries from the collection.
      * @returns {T[]}
      */
-    getAll(): T[]|never;
+    getAll(): T[];
 
     /**
      * Returns the entries that match the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {T[]}
      */
-    getMany(filter: Filter<T>): T[]|never;
+    getMany(filter: Filter<T>): T[];
 
     /**
      * Returns the first entry that matches the provided filter.
@@ -328,21 +340,21 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null|never;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null;
 
     /**
      * Checks if there is any entry matching the provided filter.
      * @param {Filter<T>} filter Filter to apply
      * @returns {boolean}
      */
-    has(filter: Filter<T>): boolean|never;
+    has(filter: Filter<T>): boolean;
 
     /**
      * Returns one ore more random entries from the collection.
      * @param {number} [amount] Number of entries to return
      * @returns {T|T[]}
      */
-    random(amount?: number): T|T[]|never;
+    random(amount?: number): T|T[];
 
     /**
      * Removes the entries that match the provided filter.
@@ -350,7 +362,7 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
-    remove(filter?: Filter<T>): T[]|never;
+    remove(filter?: Filter<T>): T[];
 
     /**
      * Resets the keys with default values from the entries that match the provided filter to their default values.
@@ -358,12 +370,12 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
-    reset(filter?: Filter<T>): T[]|never;
+    reset(filter?: Filter<T>): T[];
 
     /**
      * Writes the cached data into the collection's JSON file.
      */
-    save(): void|never;
+    save(): void;
 
     /**
      * Updates the entries that match the provided filter with the provided callback.
@@ -372,7 +384,7 @@ declare namespace SimplDB {
      * @param {Filter<T>} [filter] Filter to apply
      * @returns {T[]}
      */
-    update(updateCallback: UpdateCallback<Writable<T>>, filter?: Filter<T>): T[]|never;
+    update(updateCallback: UpdateCallback<Writable<T>>, filter?: Filter<T>): T[];
   }
 }
 
