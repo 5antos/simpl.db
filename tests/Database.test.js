@@ -2,6 +2,7 @@
 
 const Database = require('../lib/Database');
 const Collection = require('../lib/Collection');
+
 const db = new Database({
   autoSave: false,
   encryptionKey: 'n2dE3cU2UjVfhHGhmTaatrzcpVF6JLbu',
@@ -50,7 +51,7 @@ test('Database#createCollection', () => {
   const collections = db.collections.length;
   const collection = db.createCollection('users');
 
-  expect(collection.entries).toBe(0);
+  expect(collection.totalEntries).toBe(0);
   expect(collections).toBe(db.collections.length - 1);
 
   expect(() => db.createCollection('users')).toThrow('A collection with the provided name already exists');

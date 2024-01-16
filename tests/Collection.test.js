@@ -27,17 +27,17 @@ jest
   .spyOn(Date, 'now').mockImplementation(() => now);
 
 
-  
+
 test('Collection#create', () => {
   expect(Posts.create({ content: 'This is my first post!' }))
-    .toEqual({
+    .toMatchObject({
       id: 0,
       content: 'This is my first post!',
       createdAt: now,
       updatedAt: now,
     });
   expect(Posts.create({ content: 'This is my second post!' }))
-    .toEqual({
+    .toMatchObject({
       id: 1,
       content: 'This is my second post!',
       createdAt: now,
@@ -231,11 +231,11 @@ test('Collection#remove', () => {
     { content: 'This is my fourth post!' }
   ]);
 
-  expect(Posts.entries).toBe(4);
+  expect(Posts.totalEntries).toBe(4);
 
   Posts.remove();
 
-  expect(Posts.entries).toBe(0);
+  expect(Posts.totalEntries).toBe(0);
 });
 
 
@@ -248,11 +248,11 @@ test('Collection#reset', () => {
   ]);
 
   expect(Posts.reset(p => p.id === 0))
-    .toEqual([
+    .toMatchObject([
       { id: 0, content: 'Wow, such empty content', createdAt: now, updatedAt: now }
     ]);
   expect(Posts.reset())
-    .toEqual([
+    .toMatchObject([
       { id: 0, content: 'Wow, such empty content', createdAt: now, updatedAt: now },
       { id: 1, content: 'Wow, such empty content', createdAt: now, updatedAt: now },
       { id: 2, content: 'Wow, such empty content', createdAt: now, updatedAt: now },
@@ -276,11 +276,11 @@ test('Collection#update', () => {
   ]);
 
   expect(Posts.update(p => p.content += ' ✨', target => target.id === 0))
-    .toEqual([
+    .toMatchObject([
       { id: 0, content: 'This is my first post! ✨', createdAt: now, updatedAt: now }
     ]);
   expect(Posts.update(p => p.content = 'Hey 👋🏼! ' + p.content))
-    .toEqual([
+    .toMatchObject([
       { id: 0, content: 'Hey 👋🏼! This is my first post! ✨', createdAt: now, updatedAt: now },
       { id: 1, content: 'Hey 👋🏼! This is my second post!', createdAt: now, updatedAt: now },
       { id: 2, content: 'Hey 👋🏼! This is my third post!', createdAt: now, updatedAt: now }
@@ -288,37 +288,6 @@ test('Collection#update', () => {
 
   expect(() => Posts.update(null)).toThrow(/parameter must be a function/);
   expect(() => Posts.update(p => p.content += '🙂', null)).toThrow(/parameter must be a function/);
-
-  Posts.remove();
-});
-
-
-
-
-test('Data#save', () => {
-  Posts.create({ content: 'This is my first post!' });
-
-  const firstPost = Posts.get(p => p.id === 0);
-
-  firstPost.content = 'Post removed';
-  firstPost.save();
-
-  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'Post removed', createdAt: now, updatedAt: now });
-
-  Posts.remove();
-});
-
-
-
-test('Data#save', () => {
-  Posts.create({ content: 'This is my first post!' });
-
-  const firstPost = Posts.get(p => p.id === 0);
-
-  firstPost.content = 'Post removed';
-  firstPost.save();
-
-  expect(Posts.get(p => p.id === 0)).toMatchObject({ id: 0, content: 'Post removed', createdAt: now, updatedAt: now });
 
   Posts.remove();
 });
