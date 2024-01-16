@@ -19,14 +19,6 @@ declare namespace SimplDB {
   
   export type JSONData = string | number | Data | JSONData[] | boolean | null;
 
-  export type Incrementable<T> = {
-    [Prop in keyof T]: T[Prop] extends number ? Prop : never
-  }[keyof T]
-
-  export type Extended<T> = {
-    [Prop in keyof T as `$${Prop}`]: T[Prop]
-  }
-
   export type Readable<T> = {
     readonly [Prop in keyof T]: T[Prop]
   }
@@ -39,7 +31,20 @@ declare namespace SimplDB {
     save(): void;
   }
 
-  export type DefaultValues<T> = Pick<T, Incrementable<Extended<T>>> | Partial<T>;
+  type ExtractIncrementableProp<T> = T extends `$${infer PropName}` ? PropName : never;
+  type ExtractNonIncrementableProp<T> = T extends `$${string}` ? never : T;
+  type ExtractIncrementableProps<T> = {
+    [Prop in keyof T as ExtractIncrementableProp<Prop>]: T[Prop];
+  };
+  type ExtractNonIncrementableProps<T> = {
+    [Prop in keyof T as ExtractNonIncrementableProp<Prop>]: T[Prop];
+  };
+
+  export type DefaultValues<T> = Partial<{
+    [Prop in keyof T as ExtractIncrementableProp<Prop>]: T[Prop];
+  } & {
+    [Prop in keyof T as ExtractNonIncrementableProp<Prop>]: T[Prop];
+  }>;
 
   export type Filter<T> = (args: T) => boolean;
 
@@ -239,7 +244,7 @@ declare namespace SimplDB {
     /**
      * The total amount of entries in the collection.
      */
-    public entries: number;
+    public totalEntries: number;
 
     /**
      * The name of the collection.
@@ -311,7 +316,7 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T|null;
+    fetchOrCreate(filter: Filter<T>, data: Partial<T>): T;
 
     /**
      * Returns the first entry that matches the provided filter.
@@ -340,7 +345,7 @@ declare namespace SimplDB {
      * @param {Partial<T>} data Entry's data
      * @returns {T|null}
      */
-    getOrCreate(filter: Filter<T>, data: Partial<T>): T|null;
+    getOrCreate(filter: Filter<T>, data: Partial<T>): T;
 
     /**
      * Checks if there is any entry matching the provided filter.
