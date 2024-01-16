@@ -10,3 +10,4 @@ coverage
 # Tests
 tests/**
 !tests/*.test.js
+!tests/*.test.ts
